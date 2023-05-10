@@ -1,1 +1,5 @@
 # GLaDOS
+
+ATENTION! THE TGPT PROJECT IS NOT MINE, ITS FROM 'https://github.com/aandrew-me', THE GLaDOS FILE IS AN EXTERNAL MODIFICATION, AND NOT OFFICIAL, IF YOU WANT THE ORIGINAL GO TO 'https://github.com/aandrew-me/tgpt'
+
+THX!
