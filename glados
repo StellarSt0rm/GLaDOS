@@ -30,17 +30,17 @@ if [ -f ~/.config/tgpt/config.txt ]; then
 		printf "\n${red}RESETTING...\n"
 		rm -f ~/.config/tgpt/config.txt
 		if [ -n "$T" ] && [ -z $OP_C ]; then
-		cols=$(tput cols)
-		printf "\n"
-		tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
-	fi
+			cols=$(tput cols)
+			printf "\n"
+			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
+		fi
 	else
 		printf "\n${green}CANCELLED\n"
 		if [ -n "$T" ] && [ -z $OP_C ]; then
-		cols=$(tput cols)
-		printf "\n"
-		tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
-	fi
+			cols=$(tput cols)
+			printf "\n"
+			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
+		fi
 	fi
 elif [ "$OP_R" = true ] && [ ! -f ~/.config/tgpt/config.txt ]; then
 	printf "\n${red}There's no chat to reset!\n"
@@ -134,9 +134,9 @@ if [ "$OP_U" = true ]; then
 
 	#Check If Sudo
 	if [[ $EUID -ne 0 ]]; then
-		sudo=true
+		sudo="false"
 	else
-		sudo=false
+		sudo="true"
 	fi
 
 	#Check Install Location
@@ -147,54 +147,63 @@ if [ "$OP_U" = true ]; then
 		install_type="Local"
 	fi
 
-	if [ "$install_type" = "Global" ] && [ "$sudo" = false ]; then
+	if [ "$install_type" = "Global" ] && [ "$sudo" = "false" ]; then
 		printf "${red}This function must be run as sudo (Becouse the program is installed globally)\n\n" 
+		stty echo
 		exit
 	fi
 
 	#Cleanup funcions
 	function cleanup {
-		printf "${blue}Cleaning Up...  ${green}Done!\n"
 		cd $directory_path
-		rm -r ./tgpt 2>/dev/null
-		rm -r ./glados 2>/dev/null
+		rm -r -f ./tgpt 2>/dev/null
+		rm -r -f ./glados 2>/dev/null
 		cd
+		printf "${blue}Cleaning Up...  ${green}Done!\n"
 	}
 	
 	function cleanup_sig {
-		printf "\n${magneta}----------------------------------\n\n${blue}User Ordered SIGINT. ${yellow}Cleaning Up...\n\n"
 		cd $directory_path
-		rm -r ./tgpt 2>/dev/null
-		rm -r ./glados 2>/dev/null
+		rm -r -f ./tgpt 2>/dev/null
+		rm -r -f ./glados 2>/dev/null
 		cd
 		stty echo
+		printf "\n${magneta}----------------------------------\n\n${blue}User Ordered SIGINT. ${yellow}Cleaning Up...\n\n"
 		exit
 	}
 	
 	function cleanup_fail {
-		printf "\n${magneta}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n\n"
 		cd $directory_path
-		rm -r ./tgpt 2>/dev/null
-		rm -r ./glados 2>/dev/null
+		rm -r -f ./tgpt 2>/dev/null
+		rm -r -f ./glados 2>/dev/null
 		cd
 		stty echo
+		printf "\n${magneta}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n\n"
 		exit
 	}
 	
 	#Give Installation Type Chance
-	printf "Current installation type is:  $installation_type\nDo you want to change it? [y/N]: " && read C
-	if [ "$install_type" = Global ]; then
-		rm /usr/local/bin/glados
-		rm /usr/local/bin/gpt
-		install_location=/home/$SUDO_USER/.local/bin
-	else
-		rm /home/$SUDO_USER/.local/bin/glados
-		rm /home/$SUDO_USER/.local/bin/gpt
-		install_location=/usr/local/bin
+	printf "${blue}Current installation type is: $install_type\n"
+	if [ "$sudo" = true ]; then
+		stty echo
+		printf "${normal}Do you want to change it? [y/N]: " && read C && C=$(echo "$C" | tr '[:upper:]' '[:lower:]') && printf "\033[1A\033[2K"
+		stty -echo
+		if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
+			if [ "$install_type" = Global ]; then
+				install_location=/home/$SUDO_USER/.local/bin
+			else
+				install_location=/usr/local/bin
+			fi
+		fi
 	fi
+	printf "${magneta}----------------------------------\n\n"
 
 	#Prepare
-	directory_path="/home/$SUDO_USER/Downloads"
+	if [ "$sudo" = true ]; then
+		directory_path="/home/$SUDO_USER/Downloads"
+	else
+		directory_path="/home/$USER/Downloads"
+	fi
 	cd $directory_path
 	trap cleanup_sig SIGINT
 	printf "${yellow}Getting Latest Release Of TGPT..."
@@ -207,9 +216,9 @@ if [ "$OP_U" = true ]; then
 	stty echo
 	printf "${yellow}Getting Lastest Release Of GLaDOS..." && printf "${red}  Authoritzation needed...\n${blue}"
 	if git clone -q https://github.com/GamerBlue208/GLaDOS $directory_path/glados 2>/dev/null; then
-		printf "\r\033[2K\033[1A\r\033[2K\033[1A\r\033[2K\033[1A\033[2K${yellow}Getting Lastest Release Of GLaDOS...  ${green}Success!\n"
+		printf "\033[1A\033[2K\033[1A\033[2K\033[1A\033[2K\r${yellow}Getting Lastest Release Of GLaDOS...  ${green}Success!\n"
 	else
-		printf "\r\033[2K\033[1A\r\033[2K\033[1A\r\033[2K\033[1A\033[2K${yellow}Getting Lastest Release Of GLaDOS...  ${red}Failed!"
+		printf "\033[1A\033[2K\033[1A\033[2K\033[1A\033[2K\r${yellow}Getting Lastest Release Of GLaDOS...  ${red}Failed!"
 		cleanup_fail
 	fi
 	stty -echo
@@ -224,9 +233,9 @@ if [ "$OP_U" = true ]; then
 
 	#Change Name Of Old Version
 	if [[ -e "$install_location/gpt" ]]; then
-  	mv "$install_location/gpt" "/$install_location/gpt-old"
+  		mv "$install_location/gpt" "/$install_location/gpt-old" 2>/dev/null
 	else
-		rm "$install_location/gpt-old" && mv "$install_location/gpt" "$install_location/gpt-old"
+		rm "$install_location/gpt-old" 2>/dev/null&& mv "$install_location/gpt" "$install_location/gpt-old" 2>/dev/null
 	fi
 
 	#Build
@@ -235,6 +244,20 @@ if [ "$OP_U" = true ]; then
 	printf "${yellow}Moving GLaDOS File To '$install_location'..." && printf "${green}  Success!\n" && printf "${yellow}Moving TGPT File To '$install_location' Renamed To 'GPT'..." && printf "${green}  Success!\n"
 	cd .. && cd ./glados && chmod +x ./glados && mv ./glados $install_location 2>/dev/null
 	printf "${magneta}----------------------------------\n\n"
+
+	#Delete Old Swap Files
+	if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
+		if [ "$install_type" = Global ]; then
+			rm /usr/local/bin/glados 2>/dev/null
+			rm /usr/local/bin/gpt 2>/dev/null
+			rm /usr/local/bin/gpt-old 2>/dev/null
+			sudo chown overlord ~/.local/bin/glados && sudo chown overlord ~/.local/bin/gpt && sudo chown overlord ~/.local/bin/gpt-old 2>/dev/null
+		else
+			rm /home/$SUDO_USER/.local/bin/glados 2>/dev/null
+			rm /home/$SUDO_USER/.local/bin/gpt 2>/dev/null
+			rm /home/$SUDO_USER/.local/bin/gpt-old 2>/dev/null
+		fi
+	fi
 
 	#Clean Up
 	printf "${green}Installation Succeded!\n"
