@@ -139,8 +139,6 @@ if [ "$OP_U" = true ]; then
 	cd $directory_path
 	echo -n "Getting Lastest Release Of TGPT..." && git clone -q https://github.com/aandrew-me/tgpt $directory_path/tgpt && echo "  Success!"
 	echo -n "Getting Lastest Release Of GLaDOS..." && echo "  Authoritzation needed..."
-	echo "Username For GLaDOS repo: GamerBlue208"
-	echo "Password For GLaDOS repo: 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"
 	git clone -q https://github.com/GamerBlue208/GLaDOS $directory_path/glados && echo "Success!"
 	cd ./tgpt
 	echo "----------------------------------" && echo ""
