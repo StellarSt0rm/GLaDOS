@@ -9,7 +9,7 @@
 
 
 #-----------------------VARIABLES-----------------------
-vers="1.5.9"
+vers="1.6.0"
 
 blue=$(tput setaf 4)
 yellow=$(tput setaf 11)
