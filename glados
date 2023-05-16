@@ -131,12 +131,27 @@ fi
 if [ "$OP_U" = true ]; then
 	stty -echo
 	printf "\n"
+
 	#Check If Sudo
 	if [[ $EUID -ne 0 ]]; then
-		printf "${red}This function must be run as sudo\n\n" 
+		sudo=true
+	else
+		sudo=false
+	fi
+
+	#Check Install Location
+	install_location=$(which glados | sed 's/\/glados//')
+	if [ "$install_location" = /usr/local/bin ]; then
+		install_type="Global"
+	else
+		install_type="Local"
+	fi
+
+	if [ "$install_type" = "Global" ] && [ "$sudo" = false ]; then
+		printf "${red}This function must be run as sudo (Becouse the program is installed globally)\n\n" 
 		exit
 	fi
-	
+
 	#Cleanup funcions
 	function cleanup {
 		printf "${blue}Cleaning Up...  ${green}Done!\n"
@@ -166,6 +181,18 @@ if [ "$OP_U" = true ]; then
 		exit
 	}
 	
+	#Give Installation Type Chance
+	printf "Current installation type is:  $installation_type\nDo you want to change it? [y/N]: " && read C
+	if [ "$install_type" = Global ]; then
+		rm /usr/local/bin/glados
+		rm /usr/local/bin/gpt
+		install_location=/home/$SUDO_USER/.local/bin
+	else
+		rm /home/$SUDO_USER/.local/bin/glados
+		rm /home/$SUDO_USER/.local/bin/gpt
+		install_location=/usr/local/bin
+	fi
+
 	#Prepare
 	directory_path="/home/$SUDO_USER/Downloads"
 	cd $directory_path
@@ -196,17 +223,17 @@ if [ "$OP_U" = true ]; then
 	printf "${green}  Success!\n"
 
 	#Change Name Of Old Version
-	if [[ -e "/usr/local/bin/gpt" ]]; then
-  	mv "/usr/local/bin/gpt" "/usr/local/bin/gpt-old"
+	if [[ -e "$install_location/gpt" ]]; then
+  	mv "$install_location/gpt" "/$install_location/gpt-old"
 	else
-		rm "/usr/local/bin/gpt-old" && mv "/usr/local/bin/gpt" "/usr/local/bin/gpt-old"
+		rm "$install_location/gpt-old" && mv "$install_location/gpt" "$install_location/gpt-old"
 	fi
 
 	#Build
 	printf "${yellow}Building TGPT..."
-	go build -o /usr/local/bin/gpt 2>/dev/null && printf "${green}  Success!\n"
-	printf "${yellow}Moving GLaDOS File To '/usr/local/bin'..." && printf "${green}  Success!\n" && printf "${yellow}Moving TGPT File To '/usr/local/bin' Renamed To 'GPT'..." && printf "${green}  Success!\n"
-	cd .. && cd ./glados && chmod +x ./glados &&mv ./glados /usr/local/bin 2>/dev/null
+	go build -o $install_location/gpt 2>/dev/null && printf "${green}  Success!\n"
+	printf "${yellow}Moving GLaDOS File To '$install_location'..." && printf "${green}  Success!\n" && printf "${yellow}Moving TGPT File To '$install_location' Renamed To 'GPT'..." && printf "${green}  Success!\n"
+	cd .. && cd ./glados && chmod +x ./glados && mv ./glados $install_location 2>/dev/null
 	printf "${magneta}----------------------------------\n\n"
 
 	#Clean Up
