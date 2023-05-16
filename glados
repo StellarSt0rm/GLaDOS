@@ -137,29 +137,29 @@ if [ "$OP_U" = true ]; then
 	
 	#Cleanup funcion
 	function cleanup {
-	printf "${yellow}Cleaning Up...  ${green}Done!\n\n"
-	cd $directory_path
-	rm -r ./tgpt 2>/dev/null
-	rm -r ./glados 2>/dev/null
-	cd
+		printf "${yellow}Cleaning Up...  ${green}Done!\n\n"
+		cd $directory_path
+		rm -r ./tgpt 2>/dev/null
+		rm -r ./glados 2>/dev/null
+		cd
 	}
 	
 	function cleanup_sig {
-	printf "\n${blue}----------------------------------\n\n${yellow}User Ordered SIGINT. Cleaning Up...\n\n"
-	cd $directory_path
-	rm -r ./tgpt 2>/dev/null
-	rm -r ./glados 2>/dev/null
-	cd
-	exit
+		printf "\n${blue}----------------------------------\n\n${yellow}User Ordered SIGINT. Cleaning Up...\n\n"
+		cd $directory_path
+		rm -r ./tgpt 2>/dev/null
+		rm -r ./glados 2>/dev/null
+		cd
+		exit
 	}
 	
 	function cleanup_fail {
-	printf "\n${blue}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n\n"
-	cd $directory_path
-	rm -r ./tgpt 2>/dev/null
-	rm -r ./glados 2>/dev/null
-	cd
-	exit
+		printf "\n${blue}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n\n"
+		cd $directory_path
+		rm -r ./tgpt 2>/dev/null
+		rm -r ./glados 2>/dev/null
+		cd
+		exit
 	}
 	
 	#Prepare
