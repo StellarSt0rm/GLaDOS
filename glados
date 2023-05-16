@@ -282,7 +282,7 @@ while [ "$OP_C" = true ]; do
 		printf "$h\n\n"
 		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "-"; done && tput sgr0 && printf "\n\n"
 	elif [[ "$q" == -* ]]; then
-		printf "${red}Command Not Found!\n"
+		printf "${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	else
 		gpt "$q"
 	fi	
