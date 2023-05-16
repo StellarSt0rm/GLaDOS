@@ -268,7 +268,7 @@ fi
 while [ "$OP_C" = true ]; do
 	printf "\n"
 	stty echo
-	echo -e -n  "\e[0;1m>> \e[0m" && tput setaf 4 && read -e q && tput sgr0
+	read -e -p $'\e[0;1m>> \e[0m'${blue} q && tput sgr0
 	stty -echo
 	printf "\n"
 	if [ "$q" = "-q" ]; then
