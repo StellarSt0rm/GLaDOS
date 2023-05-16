@@ -16,6 +16,7 @@ yellow=$(tput setaf 11)
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 normal=$(tput sgr0)
+magneta=$(tput setaf 5)
 
 h="\n${blue}Usage: glados \"Explain quantum computing in simple terms\"${yellow}\n\nCommand arguments:${normal}\n'-h'   -   To access this prompt\n'-c'   -   To access GLaDOS chat mode\n'-r'   -   To reset the chat\n'-n'   -   To prevent sending the name on first chat\n'-v'   -   To see the current verion\n'-u'   -   To update GLaDOS\n'-s'   -   To execute a shell command (EXPERIMENTAL!)\n\n${yellow}Chat mode arguments:  (Literally, just type them inside chat mode)${normal}\n'-q'   -   To quit GLaDOS chat mode\n'-h'   -   To access this prompt\n\n${green}More functions coming soon${normal}"
 
