@@ -145,7 +145,7 @@ if [ "$OP_U" = true ]; then
 	}
 	
 	function cleanup_sig {
-		printf "\n${blue}----------------------------------\n\n${yellow}User Ordered SIGINT. Cleaning Up...\n\n"
+		printf "\n${blue}----------------------------------\n\n${blue}User Ordered SIGINT. Cleaning Up...\n\n"
 		cd $directory_path
 		rm -r ./tgpt 2>/dev/null
 		rm -r ./glados 2>/dev/null
@@ -173,7 +173,7 @@ if [ "$OP_U" = true ]; then
 		printf "${red}  Failed!\n"
 		cleanup_fail
 	fi
-	printf "${yellow}Getting Lastest Release Of GLaDOS..." && printf "${red}  Authoritzation needed...\n${normal}"
+	printf "${yellow}Getting Lastest Release Of GLaDOS..." && printf "${red}  Authoritzation needed...\n${blue}"
 	if git clone -q https://github.com/GamerBlue208/GLaDOS $directory_path/glados 2>/dev/null; then
 		printf "\r\033[2K\033[1A\r\033[2K\033[1A\r\033[2K\033[1A\033[2K${yellow}Getting Lastest Release Of GLaDOS...  ${green}Success!\n"
 	else
