@@ -136,9 +136,9 @@ if [ "$OP_U" = true ]; then
 		exit
 	fi
 	
-	#Cleanup funcion
+	#Cleanup funcions
 	function cleanup {
-		printf "${yellow}Cleaning Up...  ${green}Done!\n\n"
+		printf "${blue}Cleaning Up...  ${green}Done!\n\n"
 		cd $directory_path
 		rm -r ./tgpt 2>/dev/null
 		rm -r ./glados 2>/dev/null
@@ -146,7 +146,7 @@ if [ "$OP_U" = true ]; then
 	}
 	
 	function cleanup_sig {
-		printf "\n${magneta}----------------------------------\n\n${blue}User Ordered SIGINT. Cleaning Up...\n\n"
+		printf "\n${magneta}----------------------------------\n\n${blue}User Ordered SIGINT. ${yellow}Cleaning Up...\n\n"
 		cd $directory_path
 		rm -r ./tgpt 2>/dev/null
 		rm -r ./glados 2>/dev/null
@@ -206,7 +206,7 @@ if [ "$OP_U" = true ]; then
 
 	#Clean Up
 	cleanup
-	printf "${green}Installation Succeded! ${yellow}\nExiting...\n\n"
+	printf "${green}Installation Succeded! ${blue}\nExiting...\n\n"
 	exit
 
 	#KEYS
