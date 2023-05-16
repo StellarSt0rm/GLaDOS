@@ -9,7 +9,7 @@
 
 
 #-----------------------VARIABLES-----------------------
-vers="1.5.5"
+vers="1.5.6"
 
 blue=$(tput setaf 4)
 yellow=$(tput setaf 11)
@@ -127,19 +127,59 @@ if ! ping -q -c1 google.com &>/dev/null; then
 fi
 
 #-----------------------UPDATER-----------------------
+printf "\n"
 if [ "$OP_U" = true ]; then
 	#Check If Sudo
 	if [[ $EUID -ne 0 ]]; then
-		echo "This function must be run as sudo" 
+		printf "${red}This function must be run as sudo\n\n" 
 		exit
 	fi
-
+	
+	#Cleanup funcion
+	function cleanup {
+	printf "${yellow}Cleaning Up...  ${green}Done!\n\n"
+	cd $directory_path
+	rm -r ./tgpt 2>/dev/null
+	rm -r ./glados 2>/dev/null
+	cd
+	}
+	
+	function cleanup_sig {
+	printf "\n${blue}----------------------------------\n\n${yellow}User Ordered SIGINT. Cleaning Up...\n\n"
+	cd $directory_path
+	rm -r ./tgpt 2>/dev/null
+	rm -r ./glados 2>/dev/null
+	cd
+	exit
+	}
+	
+	function cleanup_fail {
+	printf "\n${blue}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n\n"
+	cd $directory_path
+	rm -r ./tgpt 2>/dev/null
+	rm -r ./glados 2>/dev/null
+	cd
+	exit
+	}
+	
 	#Prepare
 	directory_path="/home/$SUDO_USER/Downloads"
 	cd $directory_path
-	printf "${yellow}Getting Lastest Release Of TGPT..." && git clone -q https://github.com/aandrew-me/tgpt $directory_path/tgpt && printf "${green}  Success!\n"
-	printf "${yellow}Getting Lastest Release Of GLaDOS..." && printf "${red}  Authoritzation needed...\n"
-	git clone -q https://github.com/GamerBlue208/GLaDOS $directory_path/glados && printf "${green}Success!\n"
+	trap cleanup_sig SIGINT
+	printf "${yellow}Getting Latest Release Of TGPT..."
+	if git clone -q https://github.com/aandrew-me/tgpt $directory_path/tgpt 2>/dev/null; then
+		printf "${green}  Success!\n"
+	else
+		printf "${red}  Failed!\n"
+		cleanup_fail
+	fi
+	printf "${yellow}Getting Lastest Release Of GLaDOS..." && printf "${red}  Authoritzation needed...\n${normal}"
+	if git clone -q https://github.com/GamerBlue208/GLaDOS $directory_path/glados 2>/dev/null; then
+		printf "${green}Success!\n"
+	else
+		printf "${red}Failed!\n"
+		cleanup_fail
+	fi
 	cd ./tgpt
 	printf "${blue}----------------------------------\n\n"
 
@@ -159,18 +199,13 @@ if [ "$OP_U" = true ]; then
 	#Build
 	printf "${yellow}Building TGPT..."
 	go build -o /usr/local/bin/gpt 2>/dev/null && printf "${green}  Success!\n"
-	printf "${yellow}Moving GLaDOS File To '/usr/local/bin'..." && printf "&{green}  Success!\n" && printf "${yellow}Moving TGPT File To '/usr/local/bin' Renamed To 'GPT'..." && printf "${green}  Success!\n"
+	printf "${yellow}Moving GLaDOS File To '/usr/local/bin'..." && printf "${green}  Success!\n" && printf "${yellow}Moving TGPT File To '/usr/local/bin' Renamed To 'GPT'..." && printf "${green}  Success!\n"
 	cd .. && cd ./glados && chmod +x ./glados &&mv ./glados /usr/local/bin 2>/dev/null
 	printf "${blue}----------------------------------\n\n"
 
 	#Clean Up
-	printf "${yellow}Cleaning Up..."
-	cd .. 
-	rm -r ./tgpt 2>/dev/null
-	rm -r ./glados 2>/dev/null
-	cd
-	printf "${grenn}Done!\n\n"
-	printf "${green}Installation Succeded! ${yellow}Exiting..."
+	cleanup
+	printf "${green}Installation Succeded! ${yellow}Exiting...\n\n"
 	exit
 
 	#KEYS
