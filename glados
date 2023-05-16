@@ -175,9 +175,9 @@ if [ "$OP_U" = true ]; then
 	fi
 	printf "${yellow}Getting Lastest Release Of GLaDOS..." && printf "${red}  Authoritzation needed...\n${normal}"
 	if git clone -q https://github.com/GamerBlue208/GLaDOS $directory_path/glados 2>/dev/null; then
-		printf "${green}Success!\n"
+		printf "\r\033[2K\033[1A\r\033[2K\033[1A\r\033[2K\033[1A\033[2K${yellow}Getting Lastest Release Of GLaDOS...  ${green}Success!\n"
 	else
-		printf "${red}Failed!\n"
+		printf "\r\033[2K\033[1A\r\033[2K\033[1A\r\033[2K\033[1A\033[2K${yellow}Getting Lastest Release Of GLaDOS...  ${red}Failed!"
 		cleanup_fail
 	fi
 	cd ./tgpt
