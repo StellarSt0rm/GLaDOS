@@ -205,7 +205,7 @@ if [ "$OP_U" = true ]; then
 
 	#Clean Up
 	cleanup
-	printf "${green}Installation Succeded! ${yellow}Exiting...\n\n"
+	printf "${green}Installation Succeded! ${yellow}\nExiting...\n\n"
 	exit
 
 	#KEYS
