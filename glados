@@ -127,8 +127,8 @@ if ! ping -q -c1 google.com &>/dev/null; then
 fi
 
 #-----------------------UPDATER-----------------------
-printf "\n"
 if [ "$OP_U" = true ]; then
+	printf "\n"
 	#Check If Sudo
 	if [[ $EUID -ne 0 ]]; then
 		printf "${red}This function must be run as sudo\n\n" 
