@@ -129,6 +129,7 @@ fi
 
 #-----------------------UPDATER-----------------------
 if [ "$OP_U" = true ]; then
+	stty -echo
 	printf "\n"
 	#Check If Sudo
 	if [[ $EUID -ne 0 ]]; then
@@ -151,6 +152,7 @@ if [ "$OP_U" = true ]; then
 		rm -r ./tgpt 2>/dev/null
 		rm -r ./glados 2>/dev/null
 		cd
+		stty echo
 		exit
 	}
 	
@@ -160,6 +162,7 @@ if [ "$OP_U" = true ]; then
 		rm -r ./tgpt 2>/dev/null
 		rm -r ./glados 2>/dev/null
 		cd
+		stty echo
 		exit
 	}
 	
@@ -174,6 +177,7 @@ if [ "$OP_U" = true ]; then
 		printf "${red}  Failed!\n"
 		cleanup_fail
 	fi
+	stty echo
 	printf "${yellow}Getting Lastest Release Of GLaDOS..." && printf "${red}  Authoritzation needed...\n${blue}"
 	if git clone -q https://github.com/GamerBlue208/GLaDOS $directory_path/glados 2>/dev/null; then
 		printf "\r\033[2K\033[1A\r\033[2K\033[1A\r\033[2K\033[1A\033[2K${yellow}Getting Lastest Release Of GLaDOS...  ${green}Success!\n"
@@ -181,6 +185,7 @@ if [ "$OP_U" = true ]; then
 		printf "\r\033[2K\033[1A\r\033[2K\033[1A\r\033[2K\033[1A\033[2K${yellow}Getting Lastest Release Of GLaDOS...  ${red}Failed!"
 		cleanup_fail
 	fi
+	stty -echo
 	cd ./tgpt
 	printf "${magneta}----------------------------------\n\n"
 
@@ -207,6 +212,7 @@ if [ "$OP_U" = true ]; then
 	#Clean Up
 	cleanup
 	printf "${green}Installation Succeded! ${blue}\nExiting...\n\n"
+	stty echo
 	exit
 
 	#KEYS
