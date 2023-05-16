@@ -345,3 +345,5 @@ while [ "$OP_C" = true ]; do
 		gpt "$q"
 	fi	
 done
+
+#HI, HOWYA DOING, LOOKING MY CODE, HUH? DON'T WORRY, U CAN COPY! IDC, HALF OF THE CODE ISN'T MINE LOL
