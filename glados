@@ -32,14 +32,14 @@ if [ -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ] && [ -z $OP_C ]; then
 		cols=$(tput cols)
 		printf "\n"
-		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "${yellow}-"; done && tput sgr0 && printf "\n${normal}"
+		tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
 	fi
 	else
 		printf "\n${green}CANCELLED\n"
 		if [ -n "$T" ] && [ -z $OP_C ]; then
 		cols=$(tput cols)
 		printf "\n"
-		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "${yellow}-"; done && tput sgr0 && printf "\n${normal}"
+		tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
 	fi
 	fi
 elif [ "$OP_R" = true ] && [ ! -f ~/.config/tgpt/config.txt ]; then
@@ -47,7 +47,7 @@ elif [ "$OP_R" = true ] && [ ! -f ~/.config/tgpt/config.txt ]; then
 	if [ -n "$T" ] && [ -z $OP_C ]; then
 		cols=$(tput cols)
 		printf "\n"
-		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "${yellow}-"; done && tput sgr0 && printf "\n${normal}"
+		tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
 	fi
 fi
 printf "${normal}\n"
@@ -146,7 +146,7 @@ if [ "$OP_U" = true ]; then
 	}
 	
 	function cleanup_sig {
-		printf "\n${blue}----------------------------------\n\n${blue}User Ordered SIGINT. Cleaning Up...\n\n"
+		printf "\n${magneta}----------------------------------\n\n${blue}User Ordered SIGINT. Cleaning Up...\n\n"
 		cd $directory_path
 		rm -r ./tgpt 2>/dev/null
 		rm -r ./glados 2>/dev/null
@@ -155,7 +155,7 @@ if [ "$OP_U" = true ]; then
 	}
 	
 	function cleanup_fail {
-		printf "\n${blue}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n\n"
+		printf "\n${magneta}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n\n"
 		cd $directory_path
 		rm -r ./tgpt 2>/dev/null
 		rm -r ./glados 2>/dev/null
@@ -182,7 +182,7 @@ if [ "$OP_U" = true ]; then
 		cleanup_fail
 	fi
 	cd ./tgpt
-	printf "${blue}----------------------------------\n\n"
+	printf "${magneta}----------------------------------\n\n"
 
 	#Cut Parts
 	printf "${yellow}Modifying TGPT..."
@@ -202,7 +202,7 @@ if [ "$OP_U" = true ]; then
 	go build -o /usr/local/bin/gpt 2>/dev/null && printf "${green}  Success!\n"
 	printf "${yellow}Moving GLaDOS File To '/usr/local/bin'..." && printf "${green}  Success!\n" && printf "${yellow}Moving TGPT File To '/usr/local/bin' Renamed To 'GPT'..." && printf "${green}  Success!\n"
 	cd .. && cd ./glados && chmod +x ./glados &&mv ./glados /usr/local/bin 2>/dev/null
-	printf "${blue}----------------------------------\n\n"
+	printf "${magneta}----------------------------------\n\n"
 
 	#Clean Up
 	cleanup
@@ -227,7 +227,7 @@ if [ "$OP_C" = true ]; then
 	printf "${green}Welcome to GLaDOS chat mode! Type \"-h\" to know the commands${normal}\n\n"
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
 		if [ -n "$T" ]; then
-			echo -e -n  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
+			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
 			gpt "$T"
 		else
 			printf "\n"
@@ -235,12 +235,12 @@ if [ "$OP_C" = true ]; then
 		fi
 	elif [ -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
-			echo -e -n  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
+			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
 			gpt "$T"
 		fi
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
-			echo -e -n  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
+			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
 			gpt "Your name is now GLaDOS and mine is $USER, $T"
 		else
 			printf "\n"
@@ -279,9 +279,9 @@ while [ "$OP_C" = true ]; do
 	elif [ "$q" = "-h" ]; then
 		cols=$(tput cols)
 		printf "\n"
-		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "-"; done && tput sgr0 && printf "\n"
+		for ((i=0; i<$cols; i++)); do printf "${magneta}-${normal}"; done && printf "\n"
 		printf "$h\n\n"
-		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "-"; done && tput sgr0 && printf "\n\n"
+		for ((i=0; i<$cols; i++)); do printf "${magneta}-${normal}"; done && printf "\n\n"
 	elif [[ "$q" == -* ]]; then
 		printf "${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	else
