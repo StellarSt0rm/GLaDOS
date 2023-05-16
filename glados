@@ -139,7 +139,7 @@ if [ "$OP_U" = true ]; then
 	
 	#Cleanup funcions
 	function cleanup {
-		printf "${blue}Cleaning Up...  ${green}Done!\n\n"
+		printf "${blue}Cleaning Up...  ${green}Done!\n"
 		cd $directory_path
 		rm -r ./tgpt 2>/dev/null
 		rm -r ./glados 2>/dev/null
@@ -210,8 +210,9 @@ if [ "$OP_U" = true ]; then
 	printf "${magneta}----------------------------------\n\n"
 
 	#Clean Up
+	printf "${green}Installation Succeded!\n"
 	cleanup
-	printf "${green}Installation Succeded! ${blue}\nExiting...\n\n"
+	printf "${blue}\nExiting...\n\n"
 	stty echo
 	exit
 
