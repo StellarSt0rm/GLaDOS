@@ -1,0 +1,255 @@
+#!/bin/bash
+
+
+#-----------------------TESTING-----------------------
+
+#ID=id:chatcmpl-79T1EkA8nPM5AQbeNG3x0QRTPfp95 --- 04/26/23/08:34
+#ID=$(echo "$ID" | sed 's/ ---.*//')
+#echo "$ID"
+
+
+#-----------------------VARIABLES-----------------------
+vers="1.5.4"
+
+blue=$(tput setaf 4)
+yellow=$(tput setaf 11)
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+normal=$(tput sgr0)
+
+h="\n${blue}Usage: glados \"Explain quantum computing in simple terms\"${yellow}\n\nCommand arguments:${normal}\n'-h'   -   To access this prompt\n'-c'   -   To access GLaDOS chat mode\n'-r'   -   To reset the chat\n'-n'   -   To prevent sending the name on first chat\n'-v'   -   To see the current verion\n'-u'   -   To update GLaDOS\n'-s'   -   To execute a shell command (EXPERIMENTAL!)\n\n${yellow}Chat mode arguments:  (Literally, just type them inside chat mode)${normal}\n'-q'   -   To quit GLaDOS chat mode\n'-h'   -   To access this prompt\n\n${green}More functions coming soon${normal}"
+
+
+#-----------------------FUNCTIONS-----------------------
+function reset() {
+if [ -f ~/.config/tgpt/config.txt ]; then
+	printf "\n${red}Are you sure you want to reset the chat, it will be DELETED!\n\n${normal}Are you sure? [y/N]: "
+	read C && C=$(echo "$C" | tr '[:upper:]' '[:lower:]')
+	if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
+		printf "\n${red}RESETTING...\n"
+		rm -f ~/.config/tgpt/config.txt
+		if [ -n "$T" ] && [ -z $OP_C ]; then
+		cols=$(tput cols)
+		printf "\n"
+		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "${yellow}-"; done && tput sgr0 && printf "\n${normal}"
+	fi
+	else
+		printf "\n${green}CANCELLED\n"
+		if [ -n "$T" ] && [ -z $OP_C ]; then
+		cols=$(tput cols)
+		printf "\n"
+		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "${yellow}-"; done && tput sgr0 && printf "\n${normal}"
+	fi
+	fi
+elif [ "$OP_R" = true ] && [ ! -f ~/.config/tgpt/config.txt ]; then
+	printf "\n${red}There's no chat to reset!\n"
+	if [ -n "$T" ] && [ -z $OP_C ]; then
+		cols=$(tput cols)
+		printf "\n"
+		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "${yellow}-"; done && tput sgr0 && printf "\n${normal}"
+	fi
+fi
+printf "${normal}\n"
+}
+
+#-----------------------ARGS CHECKER-----------------------
+ARGS=$(getopt -o rcnhvus -n "$0" -- "$@" 2>/dev/null)
+if [ $? -ne 0 ]; then
+	printf "\n${red}Command Not Found!\n${blue}Use '-h' to get more help\n\n"
+	exit
+fi
+
+
+eval set -- "$ARGS"
+while true; do
+	case "$1" in
+		-r)
+			OP_R=true
+			shift;;
+		-c)
+			OP_C=true
+			shift;;
+		-n)
+			OP_N=true
+			shift;;
+		-h)
+			OP_H=true
+			shift;;
+		-v)
+			printf "\n${blue}GLaDOS verion${normal}:${yellow} $vers\n${blue}GPT version${normal}:${yellow} $(gpt -v)${normal}\n\n"
+			exit
+			shift;;
+		-u)
+			OP_U=true
+			shift;;
+		-s)
+			OP_S=true
+			shift;;
+		--)
+			shift;
+			break;;
+	esac
+done
+
+
+#-----------------------TEXT CHECKS-----------------------
+T="$@"
+if [ -z "$T" ] && [ -z "$OP_C" ] && [ -z "$OP_H" ] && [ -z "$OP_R" ] && [ -z "$OP_U" ] && [ -z "$OP_S"]; then
+	printf "\n${red}You have to write some text!\n${blue}Example: glados \"Explain quantum computing in simple terms\"\nUse '-h' to get more help${normal}\n\n"
+	exit
+elif [ "$OP_S" = true ] && [ -z "$T" ]; then
+	printf "\n${red}You have to write some text!\n${blue}Example: glados -s \"How to update system\"\nUse '-h' to get more help${normal}\n\n"
+	exit
+fi
+
+
+#-----------------------HELP PROMPT-----------------------
+if [ "$OP_H" = true ] && [ -z "$OP_C" ]; then
+	printf "$h\n\n"
+	exit
+fi
+
+
+#-----------------------RESET FUNCNCTION-----------------------
+if [ "$OP_R" = true ]; then
+reset
+	if [ -z "$OP_C" ] && [ -z "$T" ]; then
+		exit
+	fi
+sleep 2
+fi
+
+
+#-----------------------NETWORK CHECK-----------------------
+if ! ping -q -c1 google.com &>/dev/null; then
+		printf "\n${red}You don't have internet connection! Please reconnect and try again\n\n"
+		exit
+fi
+
+#-----------------------UPDATER-----------------------
+if [ "$OP_U" = true ]; then
+	#Check If Sudo
+	if [[ $EUID -ne 0 ]]; then
+		echo "This function must be run as sudo" 
+		exit
+	fi
+
+	#Prepare
+	directory_path="/home/$SUDO_USER/Downloads"
+	cd $directory_path
+	echo -n "Getting Lastest Release Of TGPT..." && git clone -q https://github.com/aandrew-me/tgpt $directory_path/tgpt && echo "  Success!"
+	echo -n "Getting Lastest Release Of GLaDOS..." && echo "  Authoritzation needed..."
+	echo "Username For GLaDOS repo: GamerBlue208"
+	echo "Password For GLaDOS repo: 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"
+	git clone -q https://github.com/GamerBlue208/GLaDOS $directory_path/glados && echo "Success!"
+	cd ./tgpt
+	echo "----------------------------------" && echo ""
+
+	#Cut Parts
+	echo -n "Modifying TGPT..."
+	sed -i 's/"tgpt", //g' "./main.go" 2>/dev/null
+	sed -i '/\/\/ Print the Question/,+6d' "./functions.go" 2>/dev/null
+	echo "  Success!"
+
+	#Change Name Of Old Version
+	if [[ -e "/usr/local/bin/gpt" ]]; then
+  	mv "/usr/local/bin/gpt" "/usr/local/bin/gpt-old"
+	else
+		rm "/usr/local/bin/gpt-old" && mv "/usr/local/bin/gpt" "/usr/local/bin/gpt-old"
+	fi
+
+	#Build
+	echo -n "Building TGPT..."
+	go build -o /usr/local/bin/gpt 2>/dev/null && echo "  Success!"
+	echo -n "Moving GLaDOS File To '/usr/local/bin'..." && echo "  Success!" && echo -n "Moving TGPT File To '/usr/local/bin' Renamed To 'GPT'..." && echo "  Success!"
+	cd .. && cd ./glados && chmod +x ./glados &&mv ./glados /usr/local/bin 2>/dev/null
+	echo "----------------------------------" && echo ""
+
+	#Clean Up
+	echo "Cleaning Up..."
+	cd .. 
+	rm -r ./tgpt 2>/dev/null
+	rm -r ./glados 2>/dev/null
+	cd
+	echo "Done!"
+	exit
+
+	#KEYS
+	#Username For GLaDOS repo: GamerBlue208
+	#Password For GLaDOS repo: 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
+fi
+
+#-----------------------SHELL COMMANDS-----------------------
+if [ "$OP_S" = true ]; then
+	gpt -s "$T"
+	exit
+fi
+
+#-----------------------CHAT MODE FUNCTION-----------------------
+if [ "$OP_C" = true ]; then
+	stty -echo
+	clear
+	printf "${green}Welcome to GLaDOS chat mode! Type \"-h\" to know the commands${normal}\n\n"
+	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
+		if [ -n "$T" ]; then
+			echo -e -n  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
+			gpt "$T"
+		else
+			printf "\n"
+			gpt "hi"
+		fi
+	elif [ -f ~/.config/tgpt/config.txt ]; then
+		if [ -n "$T" ]; then
+			echo -e -n  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
+			gpt "$T"
+		fi
+	elif [ ! -f ~/.config/tgpt/config.txt ]; then
+		if [ -n "$T" ]; then
+			echo -e -n  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
+			gpt "Your name is now GLaDOS and mine is $USER, $T"
+		else
+			printf "\n"
+			gpt "Your name is now GLaDOS and mine is $USER, $T"
+		fi
+	fi
+fi
+
+
+#-----------------------CLASSIC MODE FUNCTION-----------------------
+if [ -n "$T" ] && [ -z "$OP_C" ]; then
+	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
+		gpt "$T"
+		printf "\n"
+	elif [ -f ~/.config/tgpt/config.txt ]; then
+		gpt "$T"
+		printf "\n"
+	elif [ ! -f ~/.config/tgpt/config.txt ]; then
+		gpt "Your name is now GLaDOS and mine is $USER, $T"
+		printf "\n"
+	fi
+fi
+
+
+#-----------------------CHAT MODE LOOP-----------------------
+while [ "$OP_C" = true ]; do
+	printf "\n"
+	stty echo
+	echo -e -n  "\e[0;1m>> \e[0m" && tput setaf 4 && read -e q && tput sgr0
+	stty -echo
+	printf "\n"
+	if [ "$q" = "-q" ]; then
+		neofetch
+		stty echo
+		exit
+	elif [ "$q" = "-h" ]; then
+		cols=$(tput cols)
+		printf "\n"
+		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "-"; done && tput sgr0 && printf "\n"
+		printf "$h\n\n"
+		tput setaf 1 && for ((i=0; i<$cols; i++)); do echo -n "-"; done && tput sgr0 && printf "\n\n"
+	elif [[ "$q" == -* ]]; then
+		printf "${red}Command Not Found!\n"
+	else
+		gpt "$q"
+	fi	
+done
