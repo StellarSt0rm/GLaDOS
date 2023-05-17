@@ -195,7 +195,7 @@ if [ "$OP_U" = true ]; then
 		printf "${normal}Do you want to change it? [y/N]: " && read C && C=$(echo "$C" | tr '[:upper:]' '[:lower:]') && printf "\033[1A\033[2K"
 		stty -echo
 		if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
-			if [ "$install_type" = Local ]; then
+			if [ "$install_type" = Global ]; then
 				install_location=/home/$SUDO_USER/.local/bin
 			else
 				install_location=/usr/local/bin
