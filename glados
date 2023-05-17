@@ -270,8 +270,8 @@ if [ "$OP_U" = true ]; then
 			rm /home/$SUDO_USER/.local/bin/glados 2>/dev/null
 			rm /home/$SUDO_USER/.local/bin/gpt 2>/dev/null
 			rm /home/$SUDO_USER/.local/bin/gpt-old 2>/dev/null
-			rm /usr/local/sbin/glados 2>dev/null
-			rm /usr/local/sbin/gpt 2>dev/null
+			rm /usr/local/sbin/glados 2>/dev/null
+			rm /usr/local/sbin/gpt 2>/dev/null
 		fi
 	fi
 
