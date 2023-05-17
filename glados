@@ -154,7 +154,7 @@ if [ "$OP_U" = true ]; then
 	fi
 
 	if [ "$install_type" = "Global" ] && [ "$sudo" = "false" ]; then
-		printf "${red}This function must be run as sudo (Becouse the program is installed globally)\n\n" 
+		printf "${red}This function must be run as sudo (Becouse the program is installed globally)\n" 
 		stty echo
 		exit
 	fi
