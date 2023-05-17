@@ -317,13 +317,10 @@ fi
 if [ -n "$T" ] && [ -z "$OP_C" ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
 		gpt "$T"
-		printf "\n"
 	elif [ -f ~/.config/tgpt/config.txt ]; then
 		gpt "$T"
-		printf "\n"
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
 		gpt "Your name is now GLaDOS and mine is $USER, $T"
-		printf "\n"
 	fi
 fi
 
@@ -332,7 +329,8 @@ fi
 while [ "$OP_C" = true ]; do
 	printf "\n"
 	stty echo
-	printf "╭── ${blue}$USER${normal}\n╰─>" && read -e -p " " q && tput sgr0
+	#printf "\e[0;1m>>\e[0m${blue}"
+	read -e -p " " q && tput sgr0
 	stty -echo
 	printf "\n"
 	if [ "$q" = "-q" ]; then
@@ -348,7 +346,7 @@ while [ "$OP_C" = true ]; do
 	elif [[ "$q" == -* ]]; then
 		printf "${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	else
-		printf "╭── ${blue}GPT${normal}\n╰─>" && gpt "$q"
+		gpt "$q"
 	fi	
 done
 
