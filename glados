@@ -234,7 +234,7 @@ if [ "$OP_U" = true ]; then
 	#Cut Parts
 	printf "${yellow}Modifying TGPT..."
 	sed -i 's/"tgpt", //g' "./main.go" 2>/dev/null
-	sed -i '/\/\/ Print the Question/,+6d' "./functions.go" 2>/dev/null
+	sed -i '/\/\/ Print the Question/,+9d' "./functions.go" 2>/dev/null
 	printf "${green}  Success!\n"
 
 	#Change Name Of Old Version
@@ -246,7 +246,7 @@ if [ "$OP_U" = true ]; then
 
 	#Build
 	printf "${yellow}Building TGPT..."
-	go build -o $install_location/gpt
+	go build -o $install_location/gpt 2>/dev/null
 	printf "${green}  Success!\n${yellow}Moving GLaDOS File To '$install_location'..." && printf "${green}  Success!\n" && printf "${yellow}Moving TGPT File To '$install_location' Renamed To 'GPT'..." && printf "${green}  Success!\n"
 	cd .. && cd ./glados && chmod +x ./glados && mv ./glados $install_location 2>/dev/null
 	printf "${magneta}----------------------------------\n\n"
