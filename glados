@@ -264,8 +264,8 @@ if [ "$OP_U" = true ]; then
 			rm /usr/local/bin/gpt 2>/dev/null
 			rm /usr/local/bin/gpt-old 2>/dev/null
 			sudo chown overlord ~/.local/bin/glados && sudo chown overlord ~/.local/bin/gpt && sudo chown overlord ~/.local/bin/gpt-old 2>/dev/null
-			ln -s /home/$SUDO_USER/.local/bin/glados /usr/local/sbin 2>dev/null
-			ln -s /home/$SUDO_USER/.local/bin/gpt /usr/local/sbin 2>dev/null
+			ln -s /home/$SUDO_USER/.local/bin/glados /usr/local/sbin 2>/dev/null
+			ln -s /home/$SUDO_USER/.local/bin/gpt /usr/local/sbin 2>/dev/null
 		else
 			rm /home/$SUDO_USER/.local/bin/glados 2>/dev/null
 			rm /home/$SUDO_USER/.local/bin/gpt 2>/dev/null
