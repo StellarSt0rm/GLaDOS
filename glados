@@ -246,8 +246,8 @@ if [ "$OP_U" = true ]; then
 
 	#Build
 	printf "${yellow}Building TGPT..."
-	go build -o $install_location/gpt 2>/dev/null && printf "${green}  Success!\n"
-	printf "\n${yellow}Moving GLaDOS File To '$install_location'..." && printf "${green}  Success!\n" && printf "${yellow}Moving TGPT File To '$install_location' Renamed To 'GPT'..." && printf "${green}  Success!\n"
+	go build -o $install_location/gpt 2>/dev/null
+	printf "${green}  Success!\n${yellow}Moving GLaDOS File To '$install_location'..." && printf "${green}  Success!\n" && printf "${yellow}Moving TGPT File To '$install_location' Renamed To 'GPT'..." && printf "${green}  Success!\n"
 	cd .. && cd ./glados && chmod +x ./glados && mv ./glados $install_location 2>/dev/null
 	printf "${magneta}----------------------------------\n\n"
 
