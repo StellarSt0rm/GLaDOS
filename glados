@@ -332,7 +332,7 @@ fi
 while [ "$OP_C" = true ]; do
 	printf "\n"
 	stty echo
-	printf "\e[0;1m>>\e[0m${blue}" && read -e -p " " q && tput sgr0
+	printf "╭── ${blue}$USER${normal}\n╰─>" && read -e -p " " q && tput sgr0
 	stty -echo
 	printf "\n"
 	if [ "$q" = "-q" ]; then
@@ -348,7 +348,7 @@ while [ "$OP_C" = true ]; do
 	elif [[ "$q" == -* ]]; then
 		printf "${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	else
-		gpt "$q"
+		printf "╭── ${blue}GPT${normal}\n╰─>" && gpt "$q"
 	fi	
 done
 
