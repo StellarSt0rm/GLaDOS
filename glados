@@ -50,13 +50,13 @@ elif [ "$OP_R" = true ] && [ ! -f ~/.config/tgpt/config.txt ]; then
 		tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
 	fi
 fi
-printf "${normal}\n"
+printf "${normal}"
 }
 
 #-----------------------ARGS CHECKER-----------------------
 ARGS=$(getopt -o rcnhvus -n "$0" -- "$@" 2>/dev/null)
 if [ $? -ne 0 ]; then
-	printf "\n${red}Command Not Found!\n${blue}Use '-h' to get more help\n\n"
+	printf "\n${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	exit
 fi
 
@@ -112,7 +112,7 @@ fi
 
 #-----------------------HELP PROMPT-----------------------
 if [ "$OP_H" = true ] && [ -z "$OP_C" ]; then
-	printf "$h\n\n"
+	printf "$h\n"
 	exit
 fi
 
@@ -174,7 +174,7 @@ if [ "$OP_U" = true ]; then
 		rm -r -f ./glados 2>/dev/null
 		cd
 		stty echo
-		printf "\n${magneta}----------------------------------\n\n${blue}User Ordered SIGINT. ${yellow}Cleaning Up...\n\n"
+		printf "\n${magneta}----------------------------------\n\n${blue}User Ordered SIGINT. ${yellow}Cleaning Up...\n"
 		exit
 	}
 	
@@ -184,7 +184,7 @@ if [ "$OP_U" = true ]; then
 		rm -r -f ./glados 2>/dev/null
 		cd
 		stty echo
-		printf "\n${magneta}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n\n"
+		printf "\n${magneta}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n"
 		exit
 	}
 	
@@ -268,7 +268,7 @@ if [ "$OP_U" = true ]; then
 	#Clean Up
 	printf "${green}Installation Succeded!\n"
 	cleanup
-	printf "${blue}\nExiting...\n\n"
+	printf "${blue}\nExiting...\n"
 	stty echo
 	exit
 
