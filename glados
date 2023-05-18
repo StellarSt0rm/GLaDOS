@@ -105,13 +105,13 @@ done
 #-----------------------TEXT CHECKS-----------------------
 T="$@"
 if [ -z "$T" ] && [ -z "$OP_C" ] && [ -z "$OP_H" ] && [ -z "$OP_R" ] && [ -z "$OP_U" ] && [ -z "$OP_S"] && [ -z "$OP_O" ]; then
-	printf "\n${red}You have to write some text!\n${blue}Example: glados \"Explain quantum computing in simple terms\"\nUse '-h' to get more help${normal}\n\n"
+	printf "\n${red}You have to write some text!\n${blue}Example: glados \"Explain quantum computing in simple terms\"\nUse '-h' to get more help${normal}\n"
 	exit
 elif [ "$OP_S" = true ] && [ -z "$T" ]; then
-	printf "\n${red}You have to write some text!\n${blue}Example: glados -s \"How to update system\"\nUse '-h' to get more help${normal}\n\n"
+	printf "\n${red}You have to write some text!\n${blue}Example: glados -s \"How to update system\"\nUse '-h' to get more help${normal}\n"
 	exit
 elif [ "$OP_O" = true ] && [ -z "$T" ]; then
-	printf "\n${red}You have to write some text!\n${blue}Example: glados -o \"How to make a https request in php\"\nUse '-h' to get more help${normal}\n\n"
+	printf "\n${red}You have to write some text!\n${blue}Example: glados -o \"How to make a https request in php\"\nUse '-h' to get more help${normal}\n"
 	exit
 fi
 
