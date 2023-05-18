@@ -54,7 +54,7 @@ printf "${normal}"
 }
 
 #-----------------------ARGS CHECKER-----------------------
-ARGS=$(getopt -o rcnhvus -n "$0" -- "$@" 2>/dev/null)
+ARGS=$(getopt -o rcnhvuso -n "$0" -- "$@" 2>/dev/null)
 if [ $? -ne 0 ]; then
 	printf "\n${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	exit
@@ -92,6 +92,9 @@ while true; do
 		-s)
 			OP_S=true
 			shift;;
+		-o)
+			OP_O=true
+			shift;;
 		--)
 			shift;
 			break;;
@@ -101,11 +104,14 @@ done
 
 #-----------------------TEXT CHECKS-----------------------
 T="$@"
-if [ -z "$T" ] && [ -z "$OP_C" ] && [ -z "$OP_H" ] && [ -z "$OP_R" ] && [ -z "$OP_U" ] && [ -z "$OP_S"]; then
+if [ -z "$T" ] && [ -z "$OP_C" ] && [ -z "$OP_H" ] && [ -z "$OP_R" ] && [ -z "$OP_U" ] && [ -z "$OP_S"] && [ -z "$OP_O" ]; then
 	printf "\n${red}You have to write some text!\n${blue}Example: glados \"Explain quantum computing in simple terms\"\nUse '-h' to get more help${normal}\n\n"
 	exit
 elif [ "$OP_S" = true ] && [ -z "$T" ]; then
 	printf "\n${red}You have to write some text!\n${blue}Example: glados -s \"How to update system\"\nUse '-h' to get more help${normal}\n\n"
+	exit
+elif [ "$OP_O" = true ] && [ -z "$T" ]; then
+	printf "\n${red}You have to write some text!\n${blue}Example: glados -o \"How to make a https request in php\"\nUse '-h' to get more help${normal}\n\n"
 	exit
 fi
 
@@ -294,6 +300,9 @@ if [ "$OP_S" = true ]; then
 	exit
 fi
 
+#-----------------------CODE-----------------------
+if [ "$OP_O" = true ]; then
+	gpt -c "$T"
 #-----------------------CHAT MODE FUNCTION-----------------------
 if [ "$OP_C" = true ]; then
 	stty -echo
