@@ -303,6 +303,7 @@ fi
 #-----------------------CODE-----------------------
 if [ "$OP_O" = true ]; then
 	gpt -c "$T"
+	exit
 fi
 #-----------------------CHAT MODE FUNCTION-----------------------
 if [ "$OP_C" = true ]; then
