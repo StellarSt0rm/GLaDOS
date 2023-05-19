@@ -52,7 +52,7 @@ printf "${normal}"
 }
 
 #-----------------------ARGS CHECKER-----------------------
-ARGS=$(getopt -o rcnhvuso --long flags,uninstall -n "$0" -- "$@" 2>/dev/null)
+ARGS=$(getopt -o rcnhvuso --long uninstall -n "$0" -- "$@" 2>/dev/null)
 if [ $? -ne 0 ] && [ "$1" != "--flags" ]; then
 	printf "\n${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	exit
@@ -92,9 +92,6 @@ while true; do
 		-o)
 			OP_O=true
 			shift;;
-		--flags)
-			OP_FL=true
-			break
 		--uninstall)
 			OP_UN=true
 			shift;;
