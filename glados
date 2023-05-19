@@ -348,7 +348,6 @@ if [ "$OP_C" = true ]; then
 	fi
 fi
 
-
 #-----------------------CLASSIC MODE FUNCTION-----------------------
 if [ -n "$T" ] && [ -z "$OP_C" ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
@@ -359,7 +358,6 @@ if [ -n "$T" ] && [ -z "$OP_C" ]; then
 		gpt "Your name is now GLaDOS and mine is $USER, $T"
 	fi
 fi
-
 
 #-----------------------CHAT MODE LOOP-----------------------
 while [ "$OP_C" = true ]; do
