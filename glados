@@ -95,7 +95,6 @@ while true; do
 		--flags)
 			OP_FL=true
 			break
-			shift;;
 		--uninstall)
 			OP_UN=true
 			shift;;
