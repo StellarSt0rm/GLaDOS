@@ -8,7 +8,7 @@
 #echo "$ID"
 
 #-----------------------VARIABLES-----------------------
-vers="1.6.5"
+vers="1.6.6"
 
 blue=$(tput setaf 4)
 yellow=$(tput setaf 11)
