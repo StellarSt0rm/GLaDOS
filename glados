@@ -303,6 +303,12 @@ if [ "$OP_U" = true ]; then
 	#Password For GLaDOS repo: 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
 fi
 
+#-----------------------UNINSTALLER-----------------------
+if [ "OP_UN" = true]; then
+	#pfffffff, code
+	exit
+fi
+
 #-----------------------SHELL COMMANDS-----------------------
 if [ "$OP_S" = true ]; then
 	gpt -s "$T"
