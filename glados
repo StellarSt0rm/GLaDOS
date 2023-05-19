@@ -310,12 +310,6 @@ if [ "$OP_O" = true ]; then
 	exit
 fi
 
-#-----------------------FLAGS-----------------------
-if [ "$OP_FL" = true ]; then
-	echo $T
-	exit
-fi
-
 #-----------------------CHAT MODE FUNCTION-----------------------
 if [ "$OP_C" = true ]; then
 	stty -echo
