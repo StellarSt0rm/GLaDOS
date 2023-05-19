@@ -287,8 +287,6 @@ if [ "$OP_U" = true ]; then
 	export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/.local/bin"
 	exit
 
-	#KEYS
-	#Username For GLaDOS repo: GamerBlue208
 	#Password For GLaDOS repo: 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
 fi
 
