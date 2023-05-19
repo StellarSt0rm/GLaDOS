@@ -297,7 +297,7 @@ if [ "$OP_U" = true ]; then
 fi
 
 #-----------------------UNINSTALLER-----------------------
-if [ "OP_UN" = true]; then
+if [ "OP_UN" = true ]; then
 	#pfffffff, code
 	exit
 fi
@@ -316,7 +316,6 @@ fi
 
 #-----------------------FLAGS-----------------------
 if [ "$OP_FL" = true ]; then
-	set -- "${@:1:$(($OPTIND-2))}" "${@:$OPTIND}"
 	gpt "${@}"
 fi
 
