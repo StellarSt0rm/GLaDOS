@@ -53,7 +53,7 @@ printf "${normal}"
 
 #-----------------------ARGS CHECKER-----------------------
 ARGS=$(getopt -o rcnhvuso --long flags,uninstall -n "$0" -- "$@" 2>/dev/null)
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ] && [ "$1" != "--flags" ]; then
 	printf "\n${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	exit
 fi
@@ -316,7 +316,8 @@ fi
 
 #-----------------------FLAGS-----------------------
 if [ "$OP_FL" = true ]; then
-	gpt "$@"
+	set -- "${@:1:$(($OPTIND-2))}" "${@:$OPTIND}"
+	gpt "${@}"
 fi
 
 #-----------------------CHAT MODE FUNCTION-----------------------
