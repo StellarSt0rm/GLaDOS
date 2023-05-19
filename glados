@@ -54,7 +54,7 @@ printf "${normal}"
 }
 
 #-----------------------ARGS CHECKER-----------------------
-ARGS=$(getopt -o rcnhvuso -n "$0" -- "$@" 2>/dev/null)
+ARGS=$(getopt -o rcnhvuso --long flags,uninstall -n "$0" -- "$@" 2>/dev/null)
 if [ $? -ne 0 ]; then
 	printf "\n${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	exit
@@ -94,6 +94,12 @@ while true; do
 			shift;;
 		-o)
 			OP_O=true
+			shift;;
+		--flags)
+			OP_FL=true
+			shift;;
+		--uninstall)
+			OP_UN=true
 			shift;;
 		--)
 			shift;
@@ -307,6 +313,12 @@ if [ "$OP_O" = true ]; then
 	gpt -c "$T"
 	exit
 fi
+
+#-----------------------FLAGS-----------------------
+if [ "$OP_FL" = true ]; then
+	gpt "$T"
+fi
+
 #-----------------------CHAT MODE FUNCTION-----------------------
 if [ "$OP_C" = true ]; then
 	stty -echo
