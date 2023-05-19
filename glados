@@ -226,9 +226,9 @@ if [ "$OP_U" = true ]; then
 	stty echo
 	printf "${yellow}Getting Lastest Release Of GLaDOS..." && printf "${red}  Authoritzation needed...\n${blue}"
 	if git clone -q https://GamerBlue208@github.com/GamerBlue208/GLaDOS $directory_path/glados 2>/dev/null; then
-		printf "\033[1A\033[2K\033[1A\033[2K\033[1A\033[2K\r${yellow}Getting Lastest Release Of GLaDOS...  ${green}Success!\n"
+		printf "\033[1A\033[2K\033[1A\033[2K\r${yellow}Getting Lastest Release Of GLaDOS...  ${green}Success!\n"
 	else
-		printf "\033[1A\033[2K\033[1A\033[2K\033[1A\033[2K\r${yellow}Getting Lastest Release Of GLaDOS...  ${red}Failed!"
+		printf "\033[1A\033[2K\033[1A\033[2K\r${yellow}Getting Lastest Release Of GLaDOS...  ${red}Failed!"
 		cleanup_fail
 	fi
 	stty -echo
