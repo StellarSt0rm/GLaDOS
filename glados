@@ -204,7 +204,7 @@ if [ "$OP_U" = true ]; then
 				printf "\033[1A\033[2K${blue}New Installation Type Is: Local\n"
 			else
 				install_location=/usr/local/bin
-				printf "\033[1A\033[2K${blue}New Installation Type Is: Local\n"
+				printf "\033[1A\033[2K${blue}New Installation Type Is: Global\n"
 			fi
 		fi
 	fi
