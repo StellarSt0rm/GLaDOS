@@ -140,6 +140,16 @@ if [ "$OP_U" = true ]; then
 	stty -echo
 	printf "\n"
 
+	#Check Language
+	if [ $(locale | grep "LANG=en_US.UTF-8") ]; then
+		Downloads_Folder="Downloads"
+	elif [ $(locale | grep "LANG=ca_ES.UTF-8") ]; then
+		Downloads_Folder="Baixades"
+	else
+		mkdir $HOME/"TMP_DELETE-ME"
+		Downloads_Folder="TMP_DELETE-ME"
+	fi
+
 	#Check If Sudo
 	if [[ $EUID -ne 0 ]]; then
 		sudo="false"
@@ -281,6 +291,10 @@ if [ "$OP_U" = true ]; then
 	fi
 
 	#Clean Up
+	if [ $Downloads_Folder="TMP_DELETE-ME" ]; then
+		cd
+		rm -rf "TMP_DELETE-ME"
+	fi
 	printf "${green}Installation Succeded!\n"
 	cleanup
 	printf "${blue}\nExiting...\n"
