@@ -210,7 +210,7 @@ if [ "$OP_U" = true ]; then
 		stty -echo
 		if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
 			if [ "$install_type" = Global ]; then
-				install_location=/home/$SUDO_USER/.local/bin
+				install_location=$HOME/.local/bin
 				printf "\033[1A\033[2K${blue}New Installation Type Is: Local\n"
 			else
 				install_location=/usr/local/bin
@@ -221,11 +221,7 @@ if [ "$OP_U" = true ]; then
 	printf "${magneta}----------------------------------\n\n"
 
 	#Prepare
-	if [ "$sudo" = true ]; then
-		directory_path="/home/$SUDO_USER/Downloads"
-	else
-		directory_path="/home/$USER/Downloads"
-	fi
+	directory_path="$HOME/Downloads"
 	cd $directory_path
 	trap cleanup_sig SIGINT
 	printf "${yellow}Getting Latest Release Of TGPT..."
@@ -279,12 +275,12 @@ if [ "$OP_U" = true ]; then
 			rm /usr/local/bin/gpt 2>/dev/null
 			rm /usr/local/bin/gpt-old 2>/dev/null
 			sudo chown $user ~/.local/bin/glados && sudo chown $user ~/.local/bin/gpt && sudo chown overlord ~/.local/bin/gpt-old 2>/dev/null
-			ln -s /home/$SUDO_USER/.local/bin/glados /usr/local/sbin 2>/dev/null
-			ln -s /home/$SUDO_USER/.local/bin/gpt /usr/local/sbin 2>/dev/null
+			ln -s $HOME.local/bin/glados /usr/local/sbin 2>/dev/null
+			ln -s $HOME/.local/bin/gpt /usr/local/sbin 2>/dev/null
 		else
-			rm /home/$SUDO_USER/.local/bin/glados 2>/dev/null
-			rm /home/$SUDO_USER/.local/bin/gpt 2>/dev/null
-			rm /home/$SUDO_USER/.local/bin/gpt-old 2>/dev/null
+			rm $HOME/.local/bin/glados 2>/dev/null
+			rm $HOME/.local/bin/gpt 2>/dev/null
+			rm $HOME/.local/bin/gpt-old 2>/dev/null
 			rm /usr/local/sbin/glados 2>/dev/null
 			rm /usr/local/sbin/gpt 2>/dev/null
 		fi
