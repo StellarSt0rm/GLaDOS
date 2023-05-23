@@ -193,16 +193,18 @@ if [ "$OP_U" = true ]; then
 	}
 	
 	#Give Installation Type Chance
-	printf "${blue}Current installation type is: $install_type\n"
+	printf "${blue}Current Installation Type Is: $install_type\n"
 	if [ "$sudo" = true ]; then
 		stty echo
-		printf "${normal}Do you want to change it? [y/N]: " && read C && C=$(echo "$C" | tr '[:upper:]' '[:lower:]') && printf "\033[1A\033[2K"
+		printf "${normal}Do You Want To Change It? [y/N]: " && read C && C=$(echo "$C" | tr '[:upper:]' '[:lower:]') && printf "\033[1A\033[2K"
 		stty -echo
 		if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
 			if [ "$install_type" = Global ]; then
 				install_location=/home/$SUDO_USER/.local/bin
+				printf "\033[1A\033[2K${blue}New Installation Type Is: Local\n"
 			else
 				install_location=/usr/local/bin
+				printf "\033[1A\033[2K${blue}New Installation Type Is: Local\n"
 			fi
 		fi
 	fi
