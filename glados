@@ -11,6 +11,7 @@
 function cleanup_2 {
 	stty echo
 	printf "\n"
+	history -r
 	exit
 }
 stty -echo
@@ -382,7 +383,7 @@ fi
 while [ "$OP_C" = true ]; do
 	printf "\n"
 	stty echo
-	printf "\e[0;1m>>\e[0m${blue}" && read -e -p " " q && tput sgr0
+	printf "\e[0;1m>>\e[0m${blue}" && read -e -p " " q && history -s $p && tput sgr0
 	stty -echo
 	printf "\n"
 	if [ "$q" = "-q" ]; then
@@ -402,4 +403,5 @@ while [ "$OP_C" = true ]; do
 	fi	
 done
 stty echo
+history -r
 #HI, HOWYA DOING, LOOKING MY CODE, HUH? DON'T WORRY, U CAN COPY! IDC, HALF OF THE CODE ISN'T MINE LOL
