@@ -10,6 +10,7 @@
 #-----------------------TRAP AND PREP-----------------------
 function cleanup_2 {
 	stty echo
+	printf "\n"
 	exit
 }
 stty -echo
