@@ -7,6 +7,14 @@
 #ID=$(echo "$ID" | sed 's/ ---.*//')
 #echo "$ID"
 
+#-----------------------TRAP AND PREP-----------------------
+function cleanup_2 {
+	stty echo
+	exit
+}
+stty -echo
+trap cleanup_2 SIGINT
+
 #-----------------------VARIABLES-----------------------
 vers="1.6.6"
 
@@ -392,5 +400,5 @@ while [ "$OP_C" = true ]; do
 		gpt "$q"
 	fi	
 done
-
+stty echo
 #HI, HOWYA DOING, LOOKING MY CODE, HUH? DON'T WORRY, U CAN COPY! IDC, HALF OF THE CODE ISN'T MINE LOL
