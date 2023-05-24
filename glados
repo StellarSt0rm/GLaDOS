@@ -335,23 +335,23 @@ if [ "$OP_C" = true ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			gpt "$T"
+			gpt "$PERSONALITY $T"
 		else
 			printf "\n"
-			gpt "hi"
+			gpt "$PERSONALITY hi"
 		fi
 	elif [ -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			gpt "$T"
+			gpt "$PERSONALITY $T"
 		fi
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			gpt "Your name is now GLaDOS and mine is $USER, $T"
+			gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
 		else
 			printf "\n"
-			gpt "Your name is now GLaDOS and mine is $USER, $T"
+			gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
 		fi
 	fi
 fi
@@ -359,11 +359,11 @@ fi
 #-----------------------CLASSIC MODE FUNCTION-----------------------
 if [ -n "$T" ] && [ -z "$OP_C" ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
-		gpt "$T"
+		gpt "$PERSONALITY $T"
 	elif [ -f ~/.config/tgpt/config.txt ]; then
-		gpt "$T"
+		gpt "$PERSONALITY $T"
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
-		gpt "Your name is now GLaDOS and mine is $USER, $T"
+		gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
 	fi
 fi
 
