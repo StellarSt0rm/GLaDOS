@@ -125,7 +125,9 @@ fi
 
 #-----------------------SETTINGS-----------------------
 if [ "$OP_SE" = true ]; then
-	printf "\nUnder Construction\n"
+	printf "\nUnder Construction\nButtttttttt, I set personality to sarcastic for testing purproses :)"
+	P="sarcastic"
+	PERSONALITY=" and your personality is $P,"
 fi
 #-----------------------RESET FUNCNCTION-----------------------
 if [ "$OP_R" = true ]; then
@@ -335,15 +337,15 @@ if [ "$OP_C" = true ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			gpt "$PERSONALITY $T"
+			gpt "My name is $USER,$PERSONALITY $T"
 		else
 			printf "\n"
-			gpt "$PERSONALITY hi"
+			gpt "My name is $USER,$PERSONALITY hi"
 		fi
 	elif [ -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			gpt "$PERSONALITY $T"
+			gpt "$T"
 		fi
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
@@ -351,7 +353,7 @@ if [ "$OP_C" = true ]; then
 			gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
 		else
 			printf "\n"
-			gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
+			gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY hi"
 		fi
 	fi
 fi
@@ -359,9 +361,9 @@ fi
 #-----------------------CLASSIC MODE FUNCTION-----------------------
 if [ -n "$T" ] && [ -z "$OP_C" ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
-		gpt "$PERSONALITY $T"
+		gpt "My name is $USER,$PERSONALITY $T"
 	elif [ -f ~/.config/tgpt/config.txt ]; then
-		gpt "$PERSONALITY $T"
+		gpt "$T"
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
 		gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
 	fi
