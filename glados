@@ -80,7 +80,7 @@ while true; do
 			else
 				install_type="Local"
 			fi
-			printf "\n${blue}Current installation type${normal}: ${yellow}$install_type\n\n${blue}GLaDOS verion${normal}:${yellow} $vers\n${blue}GPT version${normal}:${yellow} $(gpt -v)${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub:${normal} 'GamerBlue208'   ${yellow}Email:${normal} 'gamerblue208+dev@gmail.com'\n"
+			printf "\n${blue}Current installation type${normal}: ${yellow}$install_type\n\n${blue}GLaDOS verion${normal}:${yellow} $vers\n${blue}GPT version${normal}:${yellow} $(gpt -v)${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'GamerBlue208'   ${yellow}Email${blue}:${normal} 'gamerblue208+dev@gmail.com'\n"
 			exit
 			shift;;
 		-u)
