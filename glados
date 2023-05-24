@@ -52,7 +52,7 @@ printf "${normal}"
 }
 
 #-----------------------ARGS CHECKER-----------------------
-ARGS=$(getopt -o rcnhvuso --long uninstall -n "$0" -- "$@" 2>/dev/null)
+ARGS=$(getopt -o rcnhvuso --long uninstall,settings -n "$0" -- "$@" 2>/dev/null)
 if [ $? -ne 0 ] && [ "$1" != "--flags" ]; then
 	printf "\n${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	exit
@@ -95,6 +95,9 @@ while true; do
 		--uninstall)
 			OP_UN=true
 			shift;;
+		--settings)
+			OP_SE=true
+			shift;;
 		--)
 			shift;
 			break;;
@@ -103,7 +106,7 @@ done
 
 #-----------------------TEXT CHECKS-----------------------
 T="$@"
-if [ -z "$T" ] && [ -z "$OP_C" ] && [ -z "$OP_H" ] && [ -z "$OP_R" ] && [ -z "$OP_U" ] && [ -z "$OP_S"] && [ -z "$OP_O" ]; then
+if [ -z "$T" ] && [ -z "$OP_C" ] && [ -z "$OP_H" ] && [ -z "$OP_R" ] && [ -z "$OP_U" ] && [ -z "$OP_S"] && [ -z "$OP_O" ] && [ -z "$OP_SE" ]; then
 	printf "\n${red}You have to write some text!\n${blue}Example: glados \"Explain quantum computing in simple terms\"\nUse '-h' to get more help${normal}\n"
 	exit
 elif [ "$OP_S" = true ] && [ -z "$T" ]; then
@@ -120,6 +123,10 @@ if [ "$OP_H" = true ] && [ -z "$OP_C" ]; then
 	exit
 fi
 
+#-----------------------SETTINGS-----------------------
+if [ "$OP_SE" = true ]; then
+	printf "\nUnder Construction\n"
+fi
 #-----------------------RESET FUNCNCTION-----------------------
 if [ "$OP_R" = true ]; then
 reset
@@ -304,6 +311,7 @@ fi
 #-----------------------UNINSTALLER-----------------------
 if [ "OP_UN" = true ]; then
 	#pfffffff, code
+	printf "\nUnder Development, for another 2 months LOL\n"
 	exit
 fi
 
