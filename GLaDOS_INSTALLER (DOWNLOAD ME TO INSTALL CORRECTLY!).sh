@@ -192,5 +192,3 @@ printf "${blue}\nExiting...\n"
 stty echo
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/.local/bin"
 exit
-
-#Password For GLaDOS repo: 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
