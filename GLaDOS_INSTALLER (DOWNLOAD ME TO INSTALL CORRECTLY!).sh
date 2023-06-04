@@ -147,11 +147,11 @@ else
 	cleanup_fail
 fi
 stty echo
-printf "${yellow}Getting Lastest Release Of GLaDOS..." && printf "${red}  Authoritzation needed...\n${blue}"
-if git clone -q https://GamerBlue208@github.com/GamerBlue208/GLaDOS $directory_path/glados 2>/dev/null; then
-	printf "\033[1A\033[2K\033[1A\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS!\n"
+printf "${yellow}Getting Lastest Release Of GLaDOS..."
+if git clone -q https://github.com/GamerBlue208/GLaDOS $directory_path/glados 2>/dev/null; then
+	printf "\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS!\n"
 else
-	printf "\033[1A\033[2K\033[1A\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS!\n"
+	printf "\\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS!\n"
 	cleanup_fail
 fi
 stty -echo
