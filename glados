@@ -61,6 +61,10 @@ fi
 printf "${normal}"
 }
 
+function ask_bai() {
+	tmp=1
+}
+
 #-----------------------ARGS CHECKER-----------------------
 ARGS=$(getopt -o rcnhvuso --long uninstall,settings -n "$0" -- "$@" 2>/dev/null)
 if [ $? -ne 0 ] && [ "$1" != "--flags" ]; then
@@ -277,7 +281,7 @@ if [ "$OP_U" = true ]; then
 
 	#Build
 	printf "${yellow}Building TGPT..."
-	if go build -o $install_location/gpt 2>/dev/null; then 
+	if go build -ldflags="-s -w" -o $install_location/gpt 2>/dev/null; then 
 		printf "\033[2K\r${green}Successfully Built TGPT!\n"
 	else
 		printf "\033[2K\r${red}Failed To Build TGPT!\n"
