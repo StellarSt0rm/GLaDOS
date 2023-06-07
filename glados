@@ -86,7 +86,9 @@ while true; do
 			OP_N=true
 			shift;;
 		-h)
-			OP_H=true
+			printf "$h\n"
+			stty echo
+			exit
 			shift;;
 		-v)
 			install_location=$(which glados | sed 's/\/glados//')
@@ -96,6 +98,7 @@ while true; do
 				install_type="Local"
 			fi
 			printf "\n${blue}Current installation type${normal}: ${yellow}$install_type\n\n${blue}GLaDOS verion${normal}:${yellow} $vers\n${blue}GPT version${normal}:${yellow} $(gpt -v)${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'GamerBlue208'   ${yellow}Email${blue}:${normal} 'gamerblue208+dev@gmail.com'\n"
+			stty echo
 			exit
 			shift;;
 		-u)
@@ -131,13 +134,6 @@ elif [ "$OP_S" = true ] && [ -z "$T" ]; then
 	exit
 elif [ "$OP_O" = true ] && [ -z "$T" ]; then
 	printf "\n${red}You have to write some text!\n${blue}Example: glados -o \"How to make a https request in php\"\nUse '-h' to get more help${normal}\n"
-	stty echo
-	exit
-fi
-
-#-----------------------HELP PROMPT-----------------------
-if [ "$OP_H" = true ] && [ -z "$OP_C" ]; then
-	printf "$h\n"
 	stty echo
 	exit
 fi
