@@ -12,6 +12,7 @@ function cleanup_2 {
 	stty echo
 	printf "\n"
 	history -r
+	printf \\33\[\?1047l
 	exit
 }
 stty -echo
@@ -402,6 +403,7 @@ while [ "$OP_C" = true ]; do
 	printf "\n"
 	if [ "$q" = "-q" ]; then
 		stty echo
+		printf \\33\[\?1047l
 		exit
 	elif [ "$q" = "-h" ]; then
 		cols=$(tput cols)
@@ -415,7 +417,6 @@ while [ "$OP_C" = true ]; do
 		gpt "$q"
 	fi	
 done
-printf \\33\[\?1047l
 stty echo
 history -r
 #HI, HOWYA DOING, LOOKING MY CODE, HUH? DON'T WORRY, U CAN COPY! IDC, HALF OF THE CODE ISN'T MINE LOL
