@@ -13,6 +13,7 @@ function cleanup_2 {
 	printf "\n"
 	history -r
 	printf \\33\[\?1047l
+	tput rc
 	exit
 }
 stty -echo
@@ -323,8 +324,6 @@ if [ "$OP_U" = true ]; then
 	stty echo
 	export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/.local/bin"
 	exit
-
-	#Password For GLaDOS repo: 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
 fi
 
 #-----------------------UNINSTALLER-----------------------
@@ -352,6 +351,7 @@ fi
 #-----------------------CHAT MODE FUNCTION-----------------------
 if [ "$OP_C" = true ]; then
 	stty -echo
+	tput sc
 	printf \\33\[\?1047h
 	clear
 	printf "${green}Welcome to GLaDOS chat mode! Type \"-h\" to know the commands${normal}\n\n"
@@ -400,6 +400,7 @@ while [ "$OP_C" = true ]; do
 	if [ "$q" = "-q" ]; then
 		stty echo
 		printf \\33\[\?1047l
+		tput rc
 		exit
 	elif [ "$q" = "-h" ]; then
 		cols=$(tput cols)
