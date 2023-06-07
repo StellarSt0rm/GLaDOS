@@ -161,7 +161,7 @@ printf "${magneta}----------------------------------\n\n"
 #Cut Parts
 printf "${yellow}Modifying TGPT..."
 sed -i 's/"tgpt", //g' "./main.go" 2>/dev/null
-sed -i '/\/\/ Print the Question/,+9d' "./functions.go" 2>/dev/null
+sed -i '/\/\/ Print the Question/,+8d' "./functions.go" 2>/dev/null
 printf "\033[2K\r${green}Successfully Modified TGPT!\n"
 
 #Build
