@@ -122,18 +122,22 @@ done
 T="$@"
 if [ -z "$T" ] && [ -z "$OP_C" ] && [ -z "$OP_H" ] && [ -z "$OP_R" ] && [ -z "$OP_U" ] && [ -z "$OP_S"] && [ -z "$OP_O" ] && [ -z "$OP_SE" ]; then
 	printf "\n${red}You have to write some text!\n${blue}Example: glados \"Explain quantum computing in simple terms\"\nUse '-h' to get more help${normal}\n"
+	stty echo
 	exit
 elif [ "$OP_S" = true ] && [ -z "$T" ]; then
 	printf "\n${red}You have to write some text!\n${blue}Example: glados -s \"How to update system\"\nUse '-h' to get more help${normal}\n"
+	stty echo
 	exit
 elif [ "$OP_O" = true ] && [ -z "$T" ]; then
 	printf "\n${red}You have to write some text!\n${blue}Example: glados -o \"How to make a https request in php\"\nUse '-h' to get more help${normal}\n"
+	stty echo
 	exit
 fi
 
 #-----------------------HELP PROMPT-----------------------
 if [ "$OP_H" = true ] && [ -z "$OP_C" ]; then
 	printf "$h\n"
+	stty echo
 	exit
 fi
 
@@ -145,16 +149,18 @@ if [ "$OP_SE" = true ]; then
 fi
 #-----------------------RESET FUNCNCTION-----------------------
 if [ "$OP_R" = true ]; then
-reset
+	reset
 	if [ -z "$OP_C" ] && [ -z "$T" ]; then
+		stty echo
 		exit
 	fi
-sleep 2
+	sleep 2
 fi
 
 #-----------------------NETWORK CHECK-----------------------
 if ! ping -q -c1 google.com &>/dev/null; then
 		printf "\n${red}You don't have internet connection! Please reconnect and try again\n\n"
+		stty echo
 		exit
 fi
 
@@ -328,24 +334,28 @@ fi
 if [ "OP_UN" = true ]; then
 	#pfffffff, code
 	printf "\nUnder Development, for another 2 months LOL\n"
+	stty echo
 	exit
 fi
 
 #-----------------------SHELL COMMANDS-----------------------
 if [ "$OP_S" = true ]; then
 	gpt -s "$T"
+	stty echo
 	exit
 fi
 
 #-----------------------CODE-----------------------
 if [ "$OP_O" = true ]; then
 	gpt -c "$T"
+	stty echo
 	exit
 fi
 
 #-----------------------CHAT MODE FUNCTION-----------------------
 if [ "$OP_C" = true ]; then
 	stty -echo
+	printf \\33\[\?1047h
 	clear
 	printf "${green}Welcome to GLaDOS chat mode! Type \"-h\" to know the commands${normal}\n\n"
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
@@ -391,7 +401,6 @@ while [ "$OP_C" = true ]; do
 	stty -echo
 	printf "\n"
 	if [ "$q" = "-q" ]; then
-		neofetch
 		stty echo
 		exit
 	elif [ "$q" = "-h" ]; then
@@ -406,6 +415,7 @@ while [ "$OP_C" = true ]; do
 		gpt "$q"
 	fi	
 done
+printf \\33\[\?1047l
 stty echo
 history -r
 #HI, HOWYA DOING, LOOKING MY CODE, HUH? DON'T WORRY, U CAN COPY! IDC, HALF OF THE CODE ISN'T MINE LOL
