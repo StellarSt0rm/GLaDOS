@@ -247,7 +247,7 @@ if [ "$OP_U" = true ]; then
 	printf "${magneta}----------------------------------\n\n"
 
 	#Prepare
-	directory_path="$HOME/Downloads"
+	directory_path="/home/$user/Downloads"
 	cd $directory_path
 	trap cleanup_sig SIGINT
 	printf "${yellow}Getting Latest Release Of TGPT..."
