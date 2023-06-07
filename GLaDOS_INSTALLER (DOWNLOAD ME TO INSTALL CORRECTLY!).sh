@@ -166,7 +166,7 @@ printf "\033[2K\r${green}Successfully Modified TGPT!\n"
 
 #Build
 printf "${yellow}Building TGPT..."
-if go build -o $install_location/gpt 2>/dev/null; then 
+if go build -ldflags="-s -w" -o $install_location/gpt 2>/dev/null; then 
 	printf "\033[2K\r${green}Successfully Built TGPT!\n"
 else
 	printf "\033[2K\r${red}Failed To Build TGPT!\n"
