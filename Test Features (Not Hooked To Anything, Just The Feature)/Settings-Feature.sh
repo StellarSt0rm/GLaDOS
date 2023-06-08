@@ -9,13 +9,14 @@ magneta=$(tput setaf 5)
 
 function cleanup() {
   stty echo
+  printf \\33\[\?1047l
+  tput rc
   exit
 }
 
 trap cleanup SIGINT
 stty -echo
-printf "\n"
-function clear() {
+function clr() {
   for ((i=0; i<$1; i++)); do
     printf "\033[F\033[2K\r"
   done
@@ -24,14 +25,15 @@ function clear() {
 function main() {
   printf "${blue}Welcome To The Settings Prompt! What Do You Want To Do?\n${yellow}1) Personality\n2) Exit\n" && printf "${normal}Option: " && stty echo && read C && stty -echo
   if [ "$C" = 1 ]; then
-    clear 4
+    clr 4
     personality
   elif [ "$C" = 2 ]; then
+   	printf \\33\[\?1047l
+    tput rc
     stty echo
-    clear 5
     exit
   else
-    printf "${red}Invalid Input! Press Enter To Try Again" && read && printf "\033[2K" && clear 4
+    printf "${red}Invalid Input! Press Enter To Try Again" && read && printf "\033[2K" && clr 4
     main
   fi
 }
@@ -39,15 +41,19 @@ function main() {
 function personality() {
   printf "${blue}Personality:  What Do You Want To Do?\n${yellow}1) Set Personality\n2) Clear Personality\n3) Back\n" && printf "${normal}Option: " && stty echo && read C && stty -echo
   if [ "$C" = 1 ]; then
-    clear 5
+    clr 5
     personality_2
   elif [ "$C" = 2 ]; then
-    clear 5 && printf "${green}Succesfully Cleared Personality\n" && stty echo && exit
+    printf \\33\[\?1047l
+    tput rc
+    printf "${green}\nSuccesfully Cleared Personality\n"
+    stty echo
+    exit
   elif [ "$C" = 3 ]; then
-    clear 5
+    clr 5
     main
   else
-    printf "${red}Invalid Input! Press Enter To Try Again" && read && printf "\033[2K" && clear 5
+    printf "${red}Invalid Input! Press Enter To Try Again" && read && printf "\033[2K" && clr 5
     personality
   fi
 }
@@ -63,26 +69,32 @@ function personality_2() {
   elif [ "$C" = 4 ]; then
     P="rude"
   elif [ "$C" = 5 ]; then
-    clear 8 && printf "${blue}Write The Personalites You Want (EX: 'sweet, really funny and a bit sarcastic'):\n" && stty echo && read -e -p "${green}> ${normal}" P && stty -echo
+    clr 8 && printf "${blue}Write The Personalites You Want (EX: 'sweet, really funny and a bit sarcastic'):\n" && stty echo && read -e -p "${green}> ${normal}" P && stty -echo
   elif [ "$C" = 6 ]; then
-    clear 8
+    clr 8
     personality
   else
-    printf "${red}Invalid Input! Press Enter To Try Again" && read && printf "\033[2K" && clear 8
+    printf "${red}Invalid Input! Press Enter To Try Again" && read && printf "\033[2K" && clr 8
     personality_2
   fi
-  printf "${green}"
   if [ ! "$C" = 5 ]; then
     printf \\33\[\?1047l
-    clear 8 && printf "Successfully Set Personality!\n"
+    tput rc
+    printf "\n${green}Successfully Set Personality!\n"
+		printf "${normal}"
+		stty echo
+		exit
   else
     printf \\33\[\?1047l
-    clear 2 && printf "Successfully Set Personality!\n"
+    tput rc
+    printf "\n${green}Successfully Set Personality!\n"
+    printf "${normal}"
+		stty echo
+		exit
   fi
 }
 
+tput sc
 printf \\33\[\?1047h
+clear
 main
-printf "${normal}"
-stty echo
-exit
