@@ -87,7 +87,8 @@ function personality_2() {
     printf "${red}Invalid Input! Press Enter To Try Again" && read && printf "\033[2K" && clr 8
     personality_2
   fi
-  $P > /home/$user/.config/glados/settings-p.txt
+
+  printf '%s' "$P" > /home/$user/.config/glados/settings-p.txt
 
   if [ ! "$C" = 5 ]; then
     printf \\33\[\?1047l
