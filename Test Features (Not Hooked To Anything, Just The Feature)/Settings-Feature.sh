@@ -73,12 +73,15 @@ function personality_2() {
   fi
   printf "${green}"
   if [ ! "$C" = 5 ]; then
+    printf \\33\[\?1047l
     clear 8 && printf "Successfully Set Personality!\n"
   else
+    printf \\33\[\?1047l
     clear 2 && printf "Successfully Set Personality!\n"
   fi
 }
 
+printf \\33\[\?1047h
 main
 printf "${normal}"
 stty echo
