@@ -84,12 +84,17 @@ function ask_bai() {
 }
 
 #-----------------------ARGS CHECKER-----------------------
+args_=("-r" "-c" "-n" "-h" "-v" "-u" "-s" "-o" "--settings" "--uninstall")
 ARGS=$(getopt -o rcnhvuso --long uninstall,settings -n "$0" -- "$@" 2>/dev/null)
-if [ $? -ne 0 ] && [ "$1" != "--flags" ]; then
+if [ $? -ne 0 ]; then
 	for arg in "$@"; do
 		if [[ $arg =~ ^-.*$ ]]; then
-			printf "\n${red}'$arg' - Command Not Found!"
-		fi
+			for arg_2 in "${args_[@]}"; do
+    		if [ ! "$arg_2" = "$arg" ]; then
+        	printf "\n${red}'$arg' - Command Not Found!"
+    		fi
+			done
+    fi
 	done
 	printf "\n${magneta}----------------------------------\n\n${blue}Use '-h' to get more help\n"
 	stty echo
