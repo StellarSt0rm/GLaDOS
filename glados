@@ -482,6 +482,7 @@ if [ -n "$T" ] && [ -z "$OP_C" ]; then
 fi
 
 #-----------------------CHAT MODE LOOP-----------------------
+trap cleanup_2 SIGINT
 while [ "$OP_C" = true ]; do
 	printf "\n"
 	stty echo
