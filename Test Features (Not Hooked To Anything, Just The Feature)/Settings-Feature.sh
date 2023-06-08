@@ -7,6 +7,15 @@ green=$(tput setaf 2)
 normal=$(tput sgr0)
 magneta=$(tput setaf 5)
 
+#Check If Sudo
+if [[ $EUID -ne 0 ]]; then
+	sudo="false"
+	user=$USER
+else
+	sudo="true"
+	user=$SUDO_USER
+fi
+
 function cleanup() {
   stty echo
   printf \\33\[\?1047l
