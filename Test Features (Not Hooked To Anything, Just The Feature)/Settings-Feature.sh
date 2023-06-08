@@ -78,7 +78,7 @@ function personality_2() {
     printf "${red}Invalid Input! Press Enter To Try Again" && read && printf "\033[2K" && clr 8
     personality_2
   fi
-  if [ -f "/home/$user/.config/glados/settings.txt" ]; then
+  if [ -f "/home/$user/.config/glados" ]; then
     $P > /home/$user/.config/glados/settings-p.txt
   else
     touch /home/$user/.config/glados/settings.txt
