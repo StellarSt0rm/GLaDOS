@@ -10,12 +10,12 @@
 #-----------------------TRAP AND PREP-----------------------
 function cleanup_2 {
 	stty echo
-	printf "\n"
 	history -r
 	if [ "OP_C" = true ] || [ "OP_SE" = true ]; then
 		printf \\33\[\?1047l
 		tput rc
 	fi
+	printf "\n"
 	exit
 }
 stty -echo
