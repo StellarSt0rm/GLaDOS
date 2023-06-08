@@ -89,11 +89,11 @@ if [ $? -ne 0 ] && [ "$1" != "--flags" ]; then
 	for arg in "$@"; do
 		if [[ $arg =~ ^-.*$ ]]; then
 			printf "\n${red}'$arg' - Command Not Found!\n"
-			stty echo
-			exit
 		fi
 	done
 	printf "${magneta}----------------------------------\n\n${blue}Use '-h' to get more help\n"
+	stty echo
+	exit
 fi
 
 eval set -- "$ARGS"
