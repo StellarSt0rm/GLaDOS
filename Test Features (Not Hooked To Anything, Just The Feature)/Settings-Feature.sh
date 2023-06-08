@@ -47,7 +47,7 @@ function personality() {
     printf \\33\[\?1047l
     tput rc
     printf "${green}\nSuccesfully Cleared Personality\n"
-    rm /home/$user/.config/glados/settings.txt
+    rm /home/$user/.config/glados/settings-p.txt
     stty echo
     exit
   elif [ "$C" = 3 ]; then
@@ -78,7 +78,12 @@ function personality_2() {
     printf "${red}Invalid Input! Press Enter To Try Again" && read && printf "\033[2K" && clr 8
     personality_2
   fi
-  $P >> /home/$user/.config/glados/settings.txt
+  if [ -f "/home/$user/.config/glados/settings.txt" ]; then
+    $P > /home/$user/.config/glados/settings-p.txt
+  else
+    touch /home/$user/.config/glados/settings.txt
+  fi
+
   if [ ! "$C" = 5 ]; then
     printf \\33\[\?1047l
     tput rc
