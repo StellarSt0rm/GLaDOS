@@ -13,6 +13,7 @@ function cleanup_2 {
 	history -r
 	if [ "OP_C" = true ]; then
 		echo "TEST TEST TEST TEST TEST TEST TEST TEST "
+		sleep 5
 		printf \\33\[\?1047l
 		tput rc
 	fi
