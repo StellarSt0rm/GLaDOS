@@ -88,7 +88,7 @@ ARGS=$(getopt -o rcnhvuso --long uninstall,settings -n "$0" -- "$@" 2>/dev/null)
 if [ $? -ne 0 ] && [ "$1" != "--flags" ]; then
 	for arg in "$@"; do
 		if [[ $arg =~ ^-.*$ ]]; then
-			printf "\n${red}'$arg' - Command Not Found!\n"
+			printf "\n${red}'$arg' - Command Not Found!"
 		fi
 	done
 	printf "${magneta}----------------------------------\n\n${blue}Use '-h' to get more help\n"
