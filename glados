@@ -11,7 +11,7 @@
 function cleanup_2 {
 	stty echo
 	history -r
-	if [ "OP_C" = true ] || [ "OP_SE" = true ]; then
+	if [ "OP_C" = true ]; then
 		printf \\33\[\?1047l
 		tput rc
 	fi
@@ -506,7 +506,7 @@ while [ "$OP_C" = true ]; do
 		trap - SIGINT
 		gpt "$q"
 		trap cleanup_2 SIGINT
-	fi	
+	fi
 done
 stty echo
 history -r
