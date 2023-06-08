@@ -503,7 +503,9 @@ while [ "$OP_C" = true ]; do
 	elif [[ "$q" == -* ]]; then
 		printf "${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	else
+		trap - SIGINT
 		gpt "$q"
+		trap cleanup_2 SIGINT
 	fi	
 done
 stty echo
