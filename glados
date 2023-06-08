@@ -30,6 +30,11 @@ else
 	user=$SUDO_USER
 fi
 
+if [ -f "/home/$user/.config/glados/settings-p.txt" ]; then
+	P=$(cat /home/$user/.config/glados/settings-p.txt)
+	PERSONALITY=" and your personality is:($P),"
+fi
+
 #-----------------------VARIABLES-----------------------
 vers="1.6.6"
 
@@ -215,7 +220,7 @@ if [ "$OP_SE" = true ]; then
     	personality_2
   	fi
 
-  	printf '%s' "$P" > /home/$user/.config/glados/settings-p.txt
+		printf '%s' "$P" > /home/$user/.config/glados/settings-p.txt
 
   	if [ ! "$C" = 5 ]; then
     	printf \\33\[\?1047l
