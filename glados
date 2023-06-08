@@ -91,7 +91,7 @@ if [ $? -ne 0 ] && [ "$1" != "--flags" ]; then
 			printf "\n${red}'$arg' - Command Not Found!"
 		fi
 	done
-	printf "${magneta}----------------------------------\n\n${blue}Use '-h' to get more help\n"
+	printf "\n${magneta}----------------------------------\n\n${blue}Use '-h' to get more help\n"
 	stty echo
 	exit
 fi
