@@ -12,8 +12,10 @@ function cleanup_2 {
 	stty echo
 	printf "\n"
 	history -r
-	printf \\33\[\?1047l
-	tput rc
+	if [ "OP_C" = true ]; then
+		printf \\33\[\?1047l
+		tput rc
+	fi
 	exit
 }
 stty -echo
