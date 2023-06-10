@@ -37,5 +37,6 @@ jobs:
                   
                   token: ${{ secrets.GITHUB_TOKEN }}
                   draft: true
-                  tag_name: ${{ steps.version.outputs.tag_name }}
+                  tag_name: v
+                  target: release
                   name: glados
