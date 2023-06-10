@@ -164,7 +164,7 @@ type model struct {
 	err      error
 }
 
-func (initialModel()) model {
+func initialModel() model() {
 	size, _ := ts.GetSize()
 	termWidth := size.Col()
 	ti := textarea.New()
