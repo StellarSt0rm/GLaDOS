@@ -15,7 +15,6 @@ import (
 	"github.com/olekukonko/ts"
 
 	tls_client "github.com/bogdanfinn/tls-client"
-	"golang.org/x/mod/semver"
 )
 
 type Data struct {
