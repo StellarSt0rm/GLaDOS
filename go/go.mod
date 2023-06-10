@@ -1,4 +1,4 @@
-module github.com/aandrew-me/tgpt
+module https://github.com/GamerBlue208/GLaDOS/tree/main/go
 
 go 1.20
 
