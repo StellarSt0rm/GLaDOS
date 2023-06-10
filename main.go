@@ -148,7 +148,7 @@ func main() {
 				}
 
 			}
-
+		}
 	} else {
 		color.Red("You have to write some text")
 		color.Blue(`Example: tgpt "Explain quantum computing in simple terms"`)
@@ -164,7 +164,7 @@ type model struct {
 	err      error
 }
 
-func initialModel() model() {
+func initialModel() model {
 	size, _ := ts.GetSize()
 	termWidth := size.Col()
 	ti := textarea.New()
