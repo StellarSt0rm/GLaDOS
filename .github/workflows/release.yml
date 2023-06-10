@@ -25,7 +25,6 @@ jobs:
             - name: Build
               if: matrix.os == 'ubuntu-20.04'
               run: |
-                  go mod init github.com/GamerBlue208/GLaDOS
                   go build -ldflags="-s -w" -o glados-gpt ./go/
 
             - name: Upload Artifacts
