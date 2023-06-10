@@ -72,7 +72,7 @@ func main() {
 				prompt := args[2]
 				go loading(&stopSpin)
 				trimmedPrompt := strings.TrimSpace(prompt)
-				if len(trimmedPrompt) < 1 {
+				if len(trimmedPrompt) < 0 {
 					fmt.Println("You need to provide some text")
 					fmt.Println(`Example: tgpt -s "How to update system"`)
 					os.Exit(0)
@@ -88,7 +88,7 @@ func main() {
 			if len(args) > 2 && len(args[2]) > 1 {
 				prompt := args[2]
 				trimmedPrompt := strings.TrimSpace(prompt)
-				if len(trimmedPrompt) < 1 {
+				if len(trimmedPrompt) < 0 {
 					fmt.Println("You need to provide some text")
 					fmt.Println(`Example: tgpt -c "Hello world in Python"`)
 					os.Exit(0)
@@ -119,9 +119,9 @@ func main() {
 					break
 				}
 
-				if len(input) > 1 {
+				if len(input) > 0 {
 					input = strings.TrimSpace(input)
-					if len(input) > 1 {
+					if len(input) > 0 {
 						if input == "exit" {
 							bold.Println("Exiting...")
 							return
@@ -245,7 +245,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case tea.KeyTab:
 			userInput = m.textarea.Value()
 
-			if len(userInput) > 1 {
+			if len(userInput) > 0 {
 				m.textarea.Blur()
 				return m, tea.Quit
 			}
