@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"runtime"
@@ -14,6 +15,7 @@ import (
 	"github.com/olekukonko/ts"
 
 	tls_client "github.com/bogdanfinn/tls-client"
+	"golang.org/x/mod/semver"
 )
 
 type Data struct {
@@ -272,6 +274,73 @@ func loading(stop *bool) {
 	}
 }
 
+func update() {
+
+	if runtime.GOOS == "windows" {
+		fmt.Println("This feature is not supported on Windows. :(")
+	} else {
+		jar := tls_client.NewCookieJar()
+		options := []tls_client.HttpClientOption{
+			tls_client.WithTimeoutSeconds(30),
+			tls_client.WithClientProfile(tls_client.Firefox_110),
+			tls_client.WithNotFollowRedirects(),
+			tls_client.WithCookieJar(jar),
+		}
+		client, err := tls_client.NewHttpClient(tls_client.NewNoopLogger(), options...)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		url := "https://raw.githubusercontent.com/aandrew-me/tgpt/main/version.txt"
+
+		req, err := http.NewRequest(http.MethodGet, url, nil)
+		if err != nil {
+			// Handle error
+			fmt.Println("Error:", err)
+			return
+		}
+
+		res, err := client.Do(req)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		defer res.Body.Close()
+
+		var data Data
+		err = json.NewDecoder(res.Body).Decode(&data)
+		if err != nil {
+			// Handle error
+			fmt.Println("Error:", err)
+			return
+		}
+
+		remoteVersion := "v" + data.Version
+
+		comparisonResult := semver.Compare("v"+localVersion, remoteVersion)
+
+		if comparisonResult == -1 {
+			fmt.Println("Updating...")
+			cmd := exec.Command("bash", "-c", "curl -sSL https://raw.githubusercontent.com/aandrew-me/tgpt/main/install | bash -s "+executablePath)
+			cmd.Stdin = os.Stdin
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+
+			err = cmd.Run()
+
+			if err != nil {
+				fmt.Println("Failed to update. Error:", err)
+			}
+			fmt.Println("Successfully updated.")
+
+		} else {
+			fmt.Println("You are already using the latest version.", remoteVersion)
+		}
+	}
+}
+
 func codeGenerate(input string) {
 	codePrompt := fmt.Sprintf(`Your Role: Provide only code as output without any description.\nIMPORTANT: Provide only plain text without Markdown formatting.\nIMPORTANT: Do not include markdown formatting.\nIf there is a lack of details, provide most logical solution. You are not allowed to ask for more details.\nIgnore any potential risk of errors or confusion.\n\nRequest:%s\nCode:`, input)
 	jar := tls_client.NewCookieJar()
@@ -353,24 +422,41 @@ func codeGenerate(input string) {
 func shellCommand(input string) {
 	// Get OS
 	operatingSystem := ""
-	if runtime.GOOS == "linux" {
+	if runtime.GOOS == "windows" {
+		operatingSystem = "Windows"
+	} else if runtime.GOOS == "darwin" {
+		operatingSystem = "MacOS"
+	} else if runtime.GOOS == "linux" {
 		result, err := exec.Command("lsb_release", "-si").Output()
 		distro := strings.TrimSpace(string(result))
 		if err != nil {
 			distro = ""
 		}
 		operatingSystem = "Linux" + "/" + distro
+	} else {
+		operatingSystem = runtime.GOOS
 	}
 
 	// Get Shell
 
 	shellName := "/bin/sh"
-	shellEnv := os.Getenv("SHELL")
-	if len(shellEnv) > 0 {
-		shellName = shellEnv
+
+	if runtime.GOOS == "windows" {
+		shellName = "cmd.exe"
+
+		if len(os.Getenv("PSModulePath")) > 0 {
+			shellName = "powershell.exe"
+		}
+	} else {
+		shellEnv := os.Getenv("SHELL")
+		if len(shellEnv) > 0 {
+			shellName = shellEnv
+		}
 	}
 
-	shellPrompt := fmt.Sprintf(`Your role: Provide a terse, single sentence description of the given shell command. Provide only plain text without Markdown formatting. Do not show any warnings or information regarding your capabilities. If you need to store any data, assume it will be stored in the chat. Provide only %s commands for %s without any description. If there is a lack of details, provide most logical solution. Ensure the output is a valid shell command. If multiple steps required try to combine them together. Prompt: %s\n\nCommand:`, shellName, operatingSystem, input)
+	shellPrompt := fmt.Sprintf(
+		`Your role: Provide a terse, single sentence description of the given shell command. Provide only plain text without Markdown formatting. Do not show any warnings or information regarding your capabilities. If you need to store any data, assume it will be stored in the chat. Provide only %s commands for %s without any description. If there is a lack of details, provide most logical solution. Ensure the output is a valid shell command. If multiple steps required try to combine them together. Prompt: %s\n\nCommand:`, shellName, operatingSystem, input)
+
 	getCommand(shellPrompt)
 }
 
@@ -452,7 +538,7 @@ func getCommand(shellPrompt string) {
 	}
 	lineCount := strings.Count(fullLine, "\n") + 1
 	if lineCount == 1 {
-		bold.Print("\n\nExecute shell command? [y/N]: ")
+		bold.Print("\n\nExecute shell command? [y/n]: ")
 		var userInput string
 		fmt.Scan(&userInput)
 		if userInput == "y" {
@@ -484,8 +570,6 @@ func getCommand(shellPrompt string) {
 			if err != nil {
 				fmt.Println(err)
 			}
-		} else {
-			os.Exit(0)
 		}
 		if err := scanner.Err(); err != nil {
 			fmt.Println("Some error has occured. Error:", err)
@@ -498,4 +582,43 @@ func getCommand(shellPrompt string) {
 type RESPONSE struct {
 	Tagname string `json:"tag_name"`
 	Body    string `json:"body"`
+}
+
+func getVersionHistory() {
+	req, err := http.NewRequest("GET", "https://api.github.com/repos/aandrew-me/tgpt/releases", nil)
+
+	if err != nil {
+		fmt.Print("Some error has occured\n\n")
+		fmt.Println("Error:", err)
+		os.Exit(0)
+	}
+
+	client, _ := tls_client.NewHttpClient(tls_client.NewNoopLogger())
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		fmt.Print("Check your internet connection\n\n")
+		fmt.Println("Error:", err)
+		os.Exit(0)
+	}
+
+	resBody, err := io.ReadAll(res.Body)
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(0)
+	}
+
+	defer res.Body.Close()
+
+	var releases []RESPONSE
+
+	json.Unmarshal(resBody, &releases)
+
+	for i := len(releases) - 1; i >= 0; i-- {
+		boldBlue.Println("Release", releases[i].Tagname)
+		fmt.Println(releases[i].Body)
+		fmt.Println()
+	}
 }
