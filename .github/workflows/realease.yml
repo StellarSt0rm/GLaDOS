@@ -38,4 +38,4 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   draft: true
                   tag_name: v
-                  name: tgpt
+                  name: glados
