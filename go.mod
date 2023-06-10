@@ -1,4 +1,4 @@
-module https://github.com/GamerBlue208/GLaDOS/tree/main/go
+module github.com/GamerBlue208/GLaDOS
 
 go 1.20
 
