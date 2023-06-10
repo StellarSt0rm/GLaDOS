@@ -25,7 +25,7 @@ jobs:
             - name: Linux
               if: matrix.os == 'ubuntu-20.04'
               run: |
-                  go build ./go/main.go -o glados-gpt
+                  go build -o glados-gpt ./go/main.go
 
             - name: Upload Artifacts
               id: upload-artifacts
