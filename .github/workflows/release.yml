@@ -32,7 +32,7 @@ jobs:
               uses: softprops/action-gh-release@v1
               with:
                   files: |
-                      ./go/glados-gpt
+                      ./glados-gpt
                       ./glados
                   
                   token: ${{ secrets.GITHUB_TOKEN }}
