@@ -25,14 +25,14 @@ jobs:
             - name: Build
               if: matrix.os == 'ubuntu-20.04'
               run: |
-                  go build -ldflags="-s -w" -o glados-gpt ./
+                  go build -ldflags="-s -w" -o gpt-glados ./
 
             - name: Upload Artifacts
               id: upload-artifacts
               uses: softprops/action-gh-release@v1
               with:
                   files: |
-                      ./glados-gpt
+                      ./gpt-glados
                       ./glados
                   
                   token: ${{ secrets.GITHUB_TOKEN }}
