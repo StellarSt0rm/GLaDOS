@@ -40,3 +40,14 @@ jobs:
                   tag_name: v
                   target: release
                   name: glados
+                  body: |
+                     # Changes
+                     
+                     
+                     # How To Install
+                     
+                     1. Download **GLaDOS-Installer.sh**
+                     2. Open The Terminal And Give It Execute Permitions (chmod +x ./GLaDOS-Installer.sh (make sure you're on the same folder as the file))
+                     3. Execute It (./GLaDOS-Intsaller.sh)
+                     4. Follow The Installer
+                     5. Enjoy (To Execute Glados Run **glados**)

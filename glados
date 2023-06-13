@@ -116,7 +116,7 @@ while true; do
 			else
 				install_type="Local"
 			fi
-			printf "\n${blue}Current installation type${normal}: ${yellow}$install_type\n\n${blue}GLaDOS verion${normal}:${yellow} $vers\n${blue}GPT version${normal}:${yellow} $vers_2${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'GamerBlue208'   ${yellow}Email${blue}:${normal} 'gamerblue208+dev@gmail.com'\n$N"
+			printf "\n${blue}Current installation type${normal}: ${yellow}$install_type\n\n${blue}GLaDOS version${normal}:${yellow} $vers\n${blue}GLaDOS-GPT version${normal}:${yellow} $vers_2${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'GamerBlue208'   ${yellow}Email${blue}:${normal} 'gamerblue208+dev@gmail.com'\n$N"
 			stty echo
 			exit
 			shift;;
