@@ -87,7 +87,7 @@ printf "${magneta}----------------------------------\n\n"
 #Prepare & Download
 trap cleanup_sig SIGINT
 printf "${yellow}Getting Latest Release Of GLaDOS-GPT...\n"
-if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/glados-gpt" -o $install_location/glados-gpt && sleep 2; then
+if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/gpt-glados" -o $install_location/gpt-glados && sleep 2; then
 	printf "\033[1A\033[2K\033[1A\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS-GPT!\n"
 else
 	printf "\033[1A\033[2K\033[1A\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS-GPT!\n"
@@ -102,12 +102,12 @@ else
 	cleanup_fail
 fi
 stty -echo
-chmod +x $install_location/glados && chmod +x $install_location/glados-gpt 2>/dev/null
+chmod +x $install_location/glados && chmod +x $install_location/gpt-glados 2>/dev/null
 printf "${magneta}----------------------------------\n\n"
 
 #Change perms
 if [ "$type" = "Local" ]; then
-	sudo chown $user $install_location/glados && chown $user $install_location/glados-gpt && chown $user $install_location/gpt-old 2>/dev/null
+	sudo chown $user $install_location/glados && chown $user $install_location/gpt-glados && chown $user $install_location/gpt-old 2>/dev/null
 fi
 
 #Clean Up

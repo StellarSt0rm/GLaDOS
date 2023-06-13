@@ -33,7 +33,8 @@ if [ ! $(whoami) = "overlord" ]; then
 fi
 
 #-----------------------VARIABLES-----------------------
-vers="1.6.6"
+vers="1.7.3"
+vers_2="1.6.3"
 
 blue=$(tput setaf 4)
 yellow=$(tput setaf 11)
@@ -313,14 +314,14 @@ if [ "$OP_U" = true ]; then
 	printf "${magneta}----------------------------------\n\n"
 
 	#Remove Old Version
-	if [[ -e "$install_location/glados-gpt" ]]; then
-  		rm "$install_location/glados-gpt" 2>/dev/null
+	if [[ -e "$install_location/gpt-glados" ]]; then
+  		rm "$install_location/gpt-glados" 2>/dev/null
 	fi
 
 	#Prepare & Download
 	trap cleanup_sig SIGINT
 	printf "${yellow}Getting Latest Release Of GLaDOS-GPT...\n"
-	if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/glados-gpt" -o $install_location/glados-gpt && sleep 2; then
+	if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/gpt-glados" -o $install_location/gpt-glados && sleep 2; then
 		printf "\033[1A\033[2K\033[1A\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS-GPT!\n"
 	else
 		printf "\033[1A\033[2K\033[1A\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS-GPT!\n"
@@ -339,19 +340,19 @@ if [ "$OP_U" = true ]; then
 	if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
 		if [ "$install_type" = Global ]; then
 			rm /usr/local/bin/glados 2>/dev/null
-			rm /usr/local/bin/glados-gpt 2>/dev/null
-			sudo chown $user $HOME/.local/bin/glados && sudo chown $user $HOME/.local/bin/glados-gpt 2>/dev/null
+			rm /usr/local/bin/gpt-glados 2>/dev/null
+			sudo chown $user $HOME/.local/bin/glados && sudo chown $user $HOME/.local/bin/gpt-glados 2>/dev/null
 			ln -s $HOME/.local/bin/glados /usr/local/sbin 2>/dev/null
-			ln -s $HOME/.local/bin/glados-gpt /usr/local/sbin 2>/dev/null
+			ln -s $HOME/.local/bin/gpt-glados /usr/local/sbin 2>/dev/null
 		else
 			rm $HOME/.local/bin/glados 2>/dev/null
-			rm $HOME/.local/bin/glados-gpt 2>/dev/null
+			rm $HOME/.local/bin/gpt-glados 2>/dev/null
 			rm /usr/local/sbin/glados 2>/dev/null
-			rm /usr/local/sbin/glados-gpt 2>/dev/null
+			rm /usr/local/sbin/gpt-glados 2>/dev/null
 		fi
 	fi
 
-	chmod +x $install_location/glados && chmod +x $install_location/glados-gpt 2>/dev/null
+	chmod +x $install_location/glados && chmod +x $install_location/gpt-glados 2>/dev/null
 
 	#Clean Up
 	printf "${green}Installation Succeded!\n"
@@ -371,14 +372,14 @@ fi
 
 #-----------------------SHELL COMMANDS-----------------------
 if [ "$OP_S" = true ]; then
-	glados-gpt -s "$T"
+	gpt-glados -s "$T"
 	stty echo
 	exit
 fi
 
 #-----------------------CODE-----------------------
 if [ "$OP_O" = true ]; then
-	glados-gpt -c "$T"
+	gpt-glados -c "$T"
 	stty echo
 	exit
 fi
@@ -393,23 +394,23 @@ if [ "$OP_C" = true ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			glados-gpt "My name is $USER,$PERSONALITY $T"
+			gpt-glados "My name is $USER,$PERSONALITY $T"
 		else
 			printf "\n"
-			glados-gpt "My name is $USER,$PERSONALITY hi"
+			gpt-glados "My name is $USER,$PERSONALITY hi"
 		fi
 	elif [ -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			glados-gpt "$T"
+			gpt-glados "$T"
 		fi
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			glados-gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
+			gpt-glados "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
 		else
 			printf "\n"
-			glados-gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY hi"
+			gpt-glados "Your name is now GLaDOS and mine is $USER,$PERSONALITY hi"
 		fi
 	fi
 fi
@@ -417,11 +418,11 @@ fi
 #-----------------------CLASSIC MODE FUNCTION-----------------------
 if [ -n "$T" ] && [ -z "$OP_C" ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
-		glados-gpt "My name is $USER,$PERSONALITY $T" && printf "\033[1A$N"
+		gpt-glados "My name is $USER,$PERSONALITY $T" && printf "\033[1A$N"
 	elif [ -f ~/.config/tgpt/config.txt ]; then
-		glados-gpt "$T" && printf "\033[1A$N"
+		gpt-glados "$T" && printf "\033[1A$N"
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
-		glados-gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T" && printf "\033[1A$N"
+		gpt-glados "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T" && printf "\033[1A$N"
 	fi
 fi
 
@@ -447,7 +448,7 @@ while [ "$OP_C" = true ]; do
 		printf "${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	else
 		trap - SIGINT
-		glados-gpt "$q"
+		gpt-glados "$q"
 		trap cleanup_2 SIGINT
 	fi
 done
