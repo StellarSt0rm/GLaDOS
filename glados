@@ -282,23 +282,13 @@ if [ "$OP_U" = true ]; then
 	fi
 
 	#Cleanup funcions
-	function cleanup {
-		cd
-		rm -rf "$HOME/$Downloads_Folder"
-		printf "${blue}Cleaning Up...  ${green}Done!\n"
-	}
-	
 	function cleanup_sig {
-		cd
-		rm -rf "$HOME/$Downloads_Folder"
 		stty echo
 		printf "\n${magneta}----------------------------------\n\n${blue}User Ordered SIGINT. ${yellow}Cleaning Up...\n"
 		exit
 	}
 	
 	function cleanup_fail {
-		cd
-		rm -rf "$HOME/$Downloads_Folder"
 		stty echo
 		printf "\n${magneta}----------------------------------\n\n${red}Installation Failed! ${yellow}Cleaning Up...\n"
 		exit
@@ -322,61 +312,49 @@ if [ "$OP_U" = true ]; then
 	fi
 	printf "${magneta}----------------------------------\n\n"
 
+	#Remove Old Version
+	if [[ -e "$install_location/glados-gpt" ]]; then
+  		rm "$install_location/glados-gpt" 2>/dev/null
+	fi
+
 	#Prepare & Download
-	mkdir "$HOME/TMP_DELETE-ME"
-	Downloads_Folder="TMP_DELETE-ME"
-	directory_path="$HOME/$Downloads_Folder"
-	cd $directory_path
 	trap cleanup_sig SIGINT
 	printf "${yellow}Getting Latest Release Of GLaDOS-GPT...\n"
-	if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/glados-gpt" -o glados-gpt && sleep 2; then
+	if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/glados-gpt" -o $install_location/glados-gpt && sleep 2; then
 		printf "\033[1A\033[2K\033[1A\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS-GPT!\n"
 	else
 		printf "\033[1A\033[2K\033[1A\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS-GPT!\n"
 		cleanup_fail
 	fi
-	stty echo
 	printf "${yellow}Getting Lastest Release Of GLaDOS...\n"
-	if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/glados" -o glados && sleep 2; then
+	if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/glados" -o $install_location/glados && sleep 2; then
 		printf "\033[1A\033[2K\033[1A\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS!\n"
 	else
 		printf "\033[1A\033[2K\033[1A\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS!\n"
 		cleanup_fail
 	fi
-	stty -echo
-	cd ./tgpt
 	printf "${magneta}----------------------------------\n\n"
-
-	#Change Name Of Old Version
-	if [[ -e "$install_location/glados-gpt" ]]; then
-  		mv "$install_location/glados-gpt" "/$install_location/glados-gpt_old" 2>/dev/null
-	else
-		rm "$install_location/glados-gpt_old" 2>/dev/null && mv "$install_location/glados-gpt" "$install_location/glados-gpt_old" 2>/dev/null
-	fi
 
 	#Delete Old Swap Files
 	if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
 		if [ "$install_type" = Global ]; then
 			rm /usr/local/bin/glados 2>/dev/null
 			rm /usr/local/bin/glados-gpt 2>/dev/null
-			rm /usr/local/bin/glados-gpt_old 2>/dev/null
-			sudo chown $user $HOME/.local/bin/glados && sudo chown $user $HOME/.local/bin/glados-gpt && sudo chown $user $HOME/.local/bin/glados-gpt_old 2>/dev/null
+			sudo chown $user $HOME/.local/bin/glados && sudo chown $user $HOME/.local/bin/glados-gpt 2>/dev/null
 			ln -s $HOME/.local/bin/glados /usr/local/sbin 2>/dev/null
 			ln -s $HOME/.local/bin/glados-gpt /usr/local/sbin 2>/dev/null
 		else
 			rm $HOME/.local/bin/glados 2>/dev/null
 			rm $HOME/.local/bin/glados-gpt 2>/dev/null
-			rm $HOME/.local/bin/glados-gpt_old 2>/dev/null
 			rm /usr/local/sbin/glados 2>/dev/null
 			rm /usr/local/sbin/glados-gpt 2>/dev/null
 		fi
 	fi
 
+	chmod $install_location/glados && chmod +x $install_location/glados-gpt 2>/dev/null
+
 	#Clean Up
-	cd
-	rm -rf "TMP_DELETE-ME"
 	printf "${green}Installation Succeded!\n"
-	cleanup
 	printf "${blue}\nExiting...\n$N"
 	stty echo
 	export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/.local/bin"
