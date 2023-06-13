@@ -1,12 +1,5 @@
 #!/bin/bash
 
-
-#-----------------------TESTING-----------------------
-
-#ID=id:chatcmpl-79T1EkA8nPM5AQbeNG3x0QRTPfp95 --- 04/26/23/08:34
-#ID=$(echo "$ID" | sed 's/ ---.*//')
-#echo "$ID"
-
 #-----------------------TRAP AND PREP-----------------------
 function cleanup_2 {
 	stty echo
@@ -35,6 +28,10 @@ if [ -f "/home/$user/.config/glados/settings-p.txt" ]; then
 	PERSONALITY=" and your personality is:($P),"
 fi
 
+if [ ! $(whoami) = "overlord" ]; then
+	N="\n"
+fi
+
 #-----------------------VARIABLES-----------------------
 vers="1.6.6"
 
@@ -53,27 +50,30 @@ if [ -f ~/.config/tgpt/config.txt ]; then
 	printf "\n${red}Are you sure you want to reset the chat, it will be DELETED!\n\n${normal}Are you sure? [y/N]: "
 	read C && C=$(echo "$C" | tr '[:upper:]' '[:lower:]')
 	if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
-		printf "\n${red}RESETTING...\n"
 		rm -f ~/.config/tgpt/config.txt
 		if [ -n "$T" ] && [ -z $OP_C ]; then
 			cols=$(tput cols)
-			printf "\n"
+			printf "\n${red}RESETTING...\n"
 			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
+		else
+			printf "\n${red}RESETTING...\n$N"
 		fi
 	else
-		printf "\n${green}CANCELLED\n"
 		if [ -n "$T" ] && [ -z $OP_C ]; then
 			cols=$(tput cols)
-			printf "\n"
+			printf "\n${green}CANCELLED\n"
 			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
+		else
+			printf "\n${green}CANCELLED\n$N"
 		fi
 	fi
 elif [ "$OP_R" = true ] && [ ! -f ~/.config/tgpt/config.txt ]; then
-	printf "\n${red}There's no chat to reset!\n"
-	if [ -n "$T" ] && [ -z $OP_C ]; then
+	if [ -n "$T" ] && [ -z "$OP_C" ]; then
+		printf "\n${red}There's no chat to reset!\n"
 		cols=$(tput cols)
-		printf "\n"
 		tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
+	else
+		printf "\n${red}There's no chat to reset!\n$N"
 	fi
 fi
 printf "${normal}"
@@ -104,7 +104,7 @@ while true; do
 			OP_N=true
 			shift;;
 		-h)
-			printf "$h\n"
+			printf "$h\n$N"
 			stty echo
 			exit
 			shift;;
@@ -115,7 +115,7 @@ while true; do
 			else
 				install_type="Local"
 			fi
-			printf "\n${blue}Current installation type${normal}: ${yellow}$install_type\n\n${blue}GLaDOS verion${normal}:${yellow} $vers\n${blue}GPT version${normal}:${yellow} $(gpt -v)${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'GamerBlue208'   ${yellow}Email${blue}:${normal} 'gamerblue208+dev@gmail.com'\n"
+			printf "\n${blue}Current installation type${normal}: ${yellow}$install_type\n\n${blue}GLaDOS verion${normal}:${yellow} $vers\n${blue}GPT version${normal}:${yellow} $vers_2${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'GamerBlue208'   ${yellow}Email${blue}:${normal} 'gamerblue208+dev@gmail.com'\n$N"
 			stty echo
 			exit
 			shift;;
@@ -143,15 +143,15 @@ done
 #-----------------------TEXT CHECKS-----------------------
 T="$@"
 if [ -z "$T" ] && [ -z "$OP_C" ] && [ -z "$OP_H" ] && [ -z "$OP_R" ] && [ -z "$OP_U" ] && [ -z "$OP_S"] && [ -z "$OP_O" ] && [ -z "$OP_SE" ]; then
-	printf "\n${red}You have to write some text!\n${blue}Example: glados \"Explain quantum computing in simple terms\"\nUse '-h' to get more help${normal}\n"
+	printf "\n${red}You have to write some text!\n${blue}Example: glados \"Explain quantum computing in simple terms\"\nUse '-h' to get more help${normal}\n$N"
 	stty echo
 	exit
 elif [ "$OP_S" = true ] && [ -z "$T" ]; then
-	printf "\n${red}You have to write some text!\n${blue}Example: glados -s \"How to update system\"\nUse '-h' to get more help${normal}\n"
+	printf "\n${red}You have to write some text!\n${blue}Example: glados -s \"How to update system\"\nUse '-h' to get more help${normal}\n$N"
 	stty echo
 	exit
 elif [ "$OP_O" = true ] && [ -z "$T" ]; then
-	printf "\n${red}You have to write some text!\n${blue}Example: glados -o \"How to make a https request in php\"\nUse '-h' to get more help${normal}\n"
+	printf "\n${red}You have to write some text!\n${blue}Example: glados -o \"How to make a https request in php\"\nUse '-h' to get more help${normal}\n$N"
 	stty echo
 	exit
 fi
@@ -226,14 +226,14 @@ if [ "$OP_SE" = true ]; then
   	if [ ! "$C" = 5 ]; then
     	printf \\33\[\?1047l
     	tput rc
-    	printf "\n${green}Successfully Set Personality!\n"
+    	printf "\n${green}Successfully Set Personality!\n$N"
 			printf "${normal}"
 			stty echo
 			exit
   	else
     	printf \\33\[\?1047l
     	tput rc
-    	printf "\n${green}Successfully Set Personality!\n"
+    	printf "\n${green}Successfully Set Personality!\n$N"
     	printf "${normal}"
 			stty echo
 			exit
@@ -244,7 +244,6 @@ if [ "$OP_SE" = true ]; then
 	printf \\33\[\?1047h
 	clear
 	main
-
 fi
 #-----------------------RESET FUNCNCTION-----------------------
 if [ "$OP_R" = true ]; then
@@ -258,7 +257,7 @@ fi
 
 #-----------------------NETWORK CHECK-----------------------
 if ! ping -q -c1 google.com &>/dev/null; then
-		printf "\n${red}You don't have internet connection! Please reconnect and try again\n\n"
+		printf "\n${red}You don't have internet connection! Please reconnect and try again\n$N"
 		stty echo
 		exit
 fi
@@ -277,7 +276,7 @@ if [ "$OP_U" = true ]; then
 	fi
 
 	if [ "$install_type" = "Global" ] && [ "$sudo" = "false" ]; then
-		printf "${red}This Function Must Be Run As SUDO (Because The Program Is Installed Globally)\n" 
+		printf "${red}This Function Must Be Run As SUDO (Because The Program Is Installed Globally)\n$N" 
 		stty echo
 		exit
 	fi
@@ -378,7 +377,7 @@ if [ "$OP_U" = true ]; then
 	rm -rf "TMP_DELETE-ME"
 	printf "${green}Installation Succeded!\n"
 	cleanup
-	printf "${blue}\nExiting...\n"
+	printf "${blue}\nExiting...\n$N"
 	stty echo
 	export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/.local/bin"
 	exit
@@ -394,14 +393,14 @@ fi
 
 #-----------------------SHELL COMMANDS-----------------------
 if [ "$OP_S" = true ]; then
-	gpt -s "$T"
+	glados-gpt -s "$T"
 	stty echo
 	exit
 fi
 
 #-----------------------CODE-----------------------
 if [ "$OP_O" = true ]; then
-	gpt -c "$T"
+	glados-gpt -c "$T"
 	stty echo
 	exit
 fi
@@ -416,23 +415,23 @@ if [ "$OP_C" = true ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			gpt "My name is $USER,$PERSONALITY $T"
+			glados-gpt "My name is $USER,$PERSONALITY $T"
 		else
 			printf "\n"
-			gpt "My name is $USER,$PERSONALITY hi"
+			glados-gpt "My name is $USER,$PERSONALITY hi"
 		fi
 	elif [ -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			gpt "$T"
+			glados-gpt "$T"
 		fi
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
 		if [ -n "$T" ]; then
 			printf  "\n\e[0;1m>> \e[0m" && printf "${blue}$T${normal}\n\n"
-			gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
+			glados-gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
 		else
 			printf "\n"
-			gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY hi"
+			glados-gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY hi"
 		fi
 	fi
 fi
@@ -440,18 +439,17 @@ fi
 #-----------------------CLASSIC MODE FUNCTION-----------------------
 if [ -n "$T" ] && [ -z "$OP_C" ]; then
 	if [ "$OP_N" = true ] && { [ "$OP_R" = true ] || [ ! -f ~/.config/tgpt/config.txt ]; }; then
-		gpt "My name is $USER,$PERSONALITY $T"
+		glados-gpt "My name is $USER,$PERSONALITY $T" && printf "\033[1A$N"
 	elif [ -f ~/.config/tgpt/config.txt ]; then
-		gpt "$T"
+		glados-gpt "$T" && printf "\033[1A$N"
 	elif [ ! -f ~/.config/tgpt/config.txt ]; then
-		gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T"
+		glados-gpt "Your name is now GLaDOS and mine is $USER,$PERSONALITY $T" && printf "\033[1A$N"
 	fi
 fi
 
 #-----------------------CHAT MODE LOOP-----------------------
 trap cleanup_2 SIGINT
 while [ "$OP_C" = true ]; do
-	printf "\n"
 	stty echo
 	printf "\e[0;1m>>\e[0m${blue}" && read -e -p " " q && history -s $p && tput sgr0
 	stty -echo
@@ -471,7 +469,7 @@ while [ "$OP_C" = true ]; do
 		printf "${red}Command Not Found!\n${blue}Use '-h' to get more help\n"
 	else
 		trap - SIGINT
-		gpt "$q"
+		glados-gpt "$q"
 		trap cleanup_2 SIGINT
 	fi
 done
