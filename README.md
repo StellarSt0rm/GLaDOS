@@ -3,8 +3,6 @@ GLaDOS is a modified version of [tgpt](https://github.com/aandrew-me/tgpt), made
 
 GLaDOS doesn't need API keys to work, as the AI that it contacts is [BAI Chat](https://chatbot.theb.ai), a free AI tool
 
-If you liked this project, give it a star! ⭐ (and also one to [tgpt](https://github.com/aandrew-me/tgpt))
-
 <details id=0>
 <summary><h2><b>How To Install</b></h2></summary>
   
@@ -19,14 +17,18 @@ If you liked this project, give it a star! ⭐ (and also one to [tgpt](https://g
    5. Enjoy (To Execute GLaDOS Run **glados**)
   
 </details>
-
 <details id=1>
 <summary><h2><b>Features</b></h2></summary>
   Section Coming Soon (With Images)
 </details>
+
+<br>
 
 ---
 
 Made By GamerBlue208
 
 & You Can Use The Code Freely
+
+<br>
+If you liked this project, give it a star! ⭐ (and also one to [tgpt](https://github.com/aandrew-me/tgpt))
