@@ -48,8 +48,8 @@ h="\n${blue}Usage: glados \"Explain quantum computing in simple terms\"${yellow}
 #-----------------------FUNCTIONS-----------------------
 function reset() {
 if [ -f ~/.config/tgpt/config.txt ]; then
-	stty echo && printf "\n${red}Are you sure you want to reset the chat, it will be DELETED!\n\n${normal}Are you sure? [y/N]: " && stty -echo
-	read C && C=$(echo "$C" | tr '[:upper:]' '[:lower:]')
+	printf "\n${red}Are you sure you want to reset the chat, it will be DELETED!\n\n${normal}Are you sure? [y/N]: "
+	stty echo && read C && && stty -echo && C=$(echo "$C" | tr '[:upper:]' '[:lower:]')
 	if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
 		rm -f ~/.config/tgpt/config.txt
 		if [ -n "$T" ] && [ -z $OP_C ]; then
