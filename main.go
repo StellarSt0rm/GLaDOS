@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
-	"runtime"
 	"strings"
 	"syscall"
 
@@ -60,14 +59,10 @@ func main() {
 	}
 	args := os.Args
 
-	if len(args) > 1 && len(args[1]) > 1 {
+	if len(args) > 1 && len(args[1]) > 0 {
 		input := args[1]
 
-		if input == "-v" || input == "--version" {
-			fmt.Println("tgpt", localVersion)
-		} else if input == "-cl" || input == "--changelog" {
-			getVersionHistory()
-		} else if input == "-s" || input == "--shell" {
+		if input == "-s" {
 			if len(args) > 2 && len(args[2]) > 1 {
 				prompt := args[2]
 				go loading(&stopSpin)
@@ -84,7 +79,7 @@ func main() {
 				os.Exit(0)
 			}
 
-		} else if input == "-c" || input == "--code" {
+		} else if input == "-c" {
 			if len(args) > 2 && len(args[2]) > 1 {
 				prompt := args[2]
 				trimmedPrompt := strings.TrimSpace(prompt)
@@ -99,15 +94,12 @@ func main() {
 				fmt.Println(`Example: tgpt -c "Hello world in Python"`)
 				os.Exit(0)
 			}
-		} else if input == "-u" || input == "--update" {
-			update()
-		} else if input == "-i" || input == "--interactive" {
+		} else if input == "-i" {
 			/////////////////////
 			// Normal interactive
 			/////////////////////
 
 			reader := bufio.NewReader(os.Stdin)
-			bold.Print("Interactive mode started. Press Ctrl + C or type exit to quit.\n\n")
 			serverID = chatId
 			for {
 				boldBlue.Println("╭─ You")
@@ -133,7 +125,7 @@ func main() {
 
 			}
 
-		} else if input == "-m" || input == "--multiline" {
+		} else if input == "-m" {
 			/////////////////////
 			// Multiline interactive
 			/////////////////////
@@ -156,44 +148,15 @@ func main() {
 
 			}
 
-		} else if input == "-f" || input == "--forget" {
-			error := os.Remove(configDir + "/tgpt/config.txt")
-			if error != nil {
-				fmt.Println("There is no history to remove")
-			} else {
-				fmt.Println("Chat history removed")
-			}
-		} else if strings.HasPrefix(input, "-") {
-			boldBlue.Println(`Usage: tgpt [Flag] [Prompt]`)
-
-			boldBlue.Println("\nFlags:")
-			fmt.Printf("%-50v Generate and Execute shell commands. (Experimental) \n", "-s, --shell")
-			fmt.Printf("%-50v Generate Code. (Experimental)\n", "-c, --code")
-
-			boldBlue.Println("\nOptions:")
-			fmt.Printf("%-50v Forget Chat ID \n", "-f, --forget")
-			fmt.Printf("%-50v Print version \n", "-v, --version")
-			fmt.Printf("%-50v Print help message \n", "-h, --help")
-			fmt.Printf("%-50v Start normal interactive mode \n", "-i, --interactive")
-			fmt.Printf("%-50v Start multi-line interactive mode \n", "-m, --multiline")
-			fmt.Printf("%-50v See changelog of versions \n", "-cl, --changelog")
-
-			if runtime.GOOS != "windows" {
-				fmt.Printf("%-50v Update program \n", "-u, --update")
-			}
-
-			boldBlue.Println("\nExamples:")
-			fmt.Println("tgpt -f")
-			fmt.Println(`tgpt -s "How to update my system?"`)
 		} else {
 			go loading(&stopSpin)
 			formattedInput := strings.TrimSpace(input)
 			getData(formattedInput, chatId, configDir+"/tgpt", false)
 		}
-
+		
 	} else {
-		color.Red("You have to write some text")
-		color.Blue(`Example: tgpt "Explain quantum computing in simple terms"`)
+			color.Red("You have to write some text")
+			color.Blue(`Example: tgpt "Explain quantum computing in simple terms"`)
 	}
 }
 
