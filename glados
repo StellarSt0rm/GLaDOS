@@ -33,7 +33,7 @@ if [ ! $(whoami) = "overlord" ]; then
 fi
 
 #-----------------------VARIABLES-----------------------
-vers="1.7.3"
+vers="1.7.2"
 vers_2="1.6.3"
 
 blue=$(tput setaf 4)
