@@ -54,18 +54,18 @@ if [ -f ~/.config/tgpt/config.txt ]; then
 		rm -f ~/.config/tgpt/config.txt
 		if [ -n "$T" ] && [ -z $OP_C ]; then
 			cols=$(tput cols)
-			printf "\n\n${red}RESETTING...\n"
+			printf "\n${red}RESETTING...\n"
 			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n\n"
 		else
-			printf "\n\n${red}RESETTING...\n$N"
+			printf "\n${red}RESETTING...\n$N"
 		fi
 	else
 		if [ -n "$T" ] && [ -z $OP_C ]; then
 			cols=$(tput cols)
-			printf "\n\n${green}CANCELLED\n"
+			printf "\n${green}CANCELLED\n"
 			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n\n"
 		else
-			printf "\n\n${green}CANCELLED\n$N"
+			printf "\n${green}CANCELLED\n$N"
 		fi
 	fi
 elif [ "$OP_R" = true ] && [ ! -f ~/.config/tgpt/config.txt ]; then
