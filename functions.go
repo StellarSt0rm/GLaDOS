@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"runtime"
@@ -15,7 +14,6 @@ import (
 	"github.com/olekukonko/ts"
 
 	tls_client "github.com/bogdanfinn/tls-client"
-	"golang.org/x/mod/semver"
 )
 
 type Data struct {
@@ -83,6 +81,12 @@ func getData(input string, chatId string, configDir string, isInteractive bool) 
 	previousWasTick := false
 	isTick := false
 	isRealCode := false
+	
+	if isInteractive {
+		fmt.Println()
+		boldViolet.Println("╭─ Bot")
+	}
+	
 	gotId := false
 	id := ""
 	lineLength := 0
@@ -271,73 +275,6 @@ func loading(stop *bool) {
 		fmt.Printf("\r%s Loading", spinChars[i])
 		i = (i + 1) % len(spinChars)
 		time.Sleep(80 * time.Millisecond)
-	}
-}
-
-func update() {
-
-	if runtime.GOOS == "windows" {
-		fmt.Println("This feature is not supported on Windows. :(")
-	} else {
-		jar := tls_client.NewCookieJar()
-		options := []tls_client.HttpClientOption{
-			tls_client.WithTimeoutSeconds(30),
-			tls_client.WithClientProfile(tls_client.Firefox_110),
-			tls_client.WithNotFollowRedirects(),
-			tls_client.WithCookieJar(jar),
-		}
-		client, err := tls_client.NewHttpClient(tls_client.NewNoopLogger(), options...)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		url := "https://raw.githubusercontent.com/aandrew-me/tgpt/main/version.txt"
-
-		req, err := http.NewRequest(http.MethodGet, url, nil)
-		if err != nil {
-			// Handle error
-			fmt.Println("Error:", err)
-			return
-		}
-
-		res, err := client.Do(req)
-
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		defer res.Body.Close()
-
-		var data Data
-		err = json.NewDecoder(res.Body).Decode(&data)
-		if err != nil {
-			// Handle error
-			fmt.Println("Error:", err)
-			return
-		}
-
-		remoteVersion := "v" + data.Version
-
-		comparisonResult := semver.Compare("v"+localVersion, remoteVersion)
-
-		if comparisonResult == -1 {
-			fmt.Println("Updating...")
-			cmd := exec.Command("bash", "-c", "curl -sSL https://raw.githubusercontent.com/aandrew-me/tgpt/main/install | bash -s "+executablePath)
-			cmd.Stdin = os.Stdin
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-
-			err = cmd.Run()
-
-			if err != nil {
-				fmt.Println("Failed to update. Error:", err)
-			}
-			fmt.Println("Successfully updated.")
-
-		} else {
-			fmt.Println("You are already using the latest version.", remoteVersion)
-		}
 	}
 }
 
@@ -582,43 +519,4 @@ func getCommand(shellPrompt string) {
 type RESPONSE struct {
 	Tagname string `json:"tag_name"`
 	Body    string `json:"body"`
-}
-
-func getVersionHistory() {
-	req, err := http.NewRequest("GET", "https://api.github.com/repos/aandrew-me/tgpt/releases", nil)
-
-	if err != nil {
-		fmt.Print("Some error has occured\n\n")
-		fmt.Println("Error:", err)
-		os.Exit(0)
-	}
-
-	client, _ := tls_client.NewHttpClient(tls_client.NewNoopLogger())
-
-	res, err := client.Do(req)
-
-	if err != nil {
-		fmt.Print("Check your internet connection\n\n")
-		fmt.Println("Error:", err)
-		os.Exit(0)
-	}
-
-	resBody, err := io.ReadAll(res.Body)
-
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(0)
-	}
-
-	defer res.Body.Close()
-
-	var releases []RESPONSE
-
-	json.Unmarshal(resBody, &releases)
-
-	for i := len(releases) - 1; i >= 0; i-- {
-		boldBlue.Println("Release", releases[i].Tagname)
-		fmt.Println(releases[i].Body)
-		fmt.Println()
-	}
 }
