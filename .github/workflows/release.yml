@@ -34,11 +34,11 @@ jobs:
                   files: |
                       ./gpt-glados
                       ./glados
+                      ./GLaDOS-Installer.sh
                   
                   token: ${{ secrets.GITHUB_TOKEN }}
                   draft: true
                   tag_name: v
-                  target: release
                   name: glados
                   body: |
                      # Changes
