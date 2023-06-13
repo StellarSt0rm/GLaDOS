@@ -48,31 +48,31 @@ h="\n${blue}Usage: glados \"Explain quantum computing in simple terms\"${yellow}
 #-----------------------FUNCTIONS-----------------------
 function reset() {
 if [ -f ~/.config/tgpt/config.txt ]; then
-	printf "\n${red}Are you sure you want to reset the chat, it will be DELETED!\n\n${normal}Are you sure? [y/N]: "
+	stty echo && printf "\n${red}Are you sure you want to reset the chat, it will be DELETED!\n\n${normal}Are you sure? [y/N]: " && stty -echo
 	read C && C=$(echo "$C" | tr '[:upper:]' '[:lower:]')
 	if [ "$C" = "y" ] || [ "$C" = "yes" ]; then
 		rm -f ~/.config/tgpt/config.txt
 		if [ -n "$T" ] && [ -z $OP_C ]; then
 			cols=$(tput cols)
-			printf "\n${red}RESETTING...\n"
-			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
+			printf "\n\n${red}RESETTING...\n"
+			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n\n"
 		else
-			printf "\n${red}RESETTING...\n$N"
+			printf "\n\n${red}RESETTING...\n$N"
 		fi
 	else
 		if [ -n "$T" ] && [ -z $OP_C ]; then
 			cols=$(tput cols)
-			printf "\n${green}CANCELLED\n"
-			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
+			printf "\n\n${green}CANCELLED\n"
+			tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n\n"
 		else
-			printf "\n${green}CANCELLED\n$N"
+			printf "\n\n${green}CANCELLED\n$N"
 		fi
 	fi
 elif [ "$OP_R" = true ] && [ ! -f ~/.config/tgpt/config.txt ]; then
 	if [ -n "$T" ] && [ -z "$OP_C" ]; then
 		printf "\n${red}There's no chat to reset!\n"
 		cols=$(tput cols)
-		tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n"
+		tput setaf 1 && for ((i=0; i<$cols; i++)); do printf "${magneta}-"; done && printf "\n\n"
 	else
 		printf "\n${red}There's no chat to reset!\n$N"
 	fi
@@ -364,9 +364,19 @@ fi
 
 #-----------------------UNINSTALLER-----------------------
 if [ "OP_UN" = true ]; then
-	#pfffffff, code
-	printf "\nUnder Development, for another 2 months LOL\n"
-	stty echo
+	install_location=$(which glados | sed 's/\/glados//')
+	printf "\nWork In Progress (So, No TUI)\n"
+	if [ "$install_location" = "/usr/local/bin" ]; then
+		if [ "$sudo" = true ]; then
+			rm $install_location/glados $install_location/gpt-glados
+			stty echo
+		else
+			printf "\nSudo Is Needed To Uninstall GLaDOS Globall Mode\n"
+		fi
+	else
+		rm $install_location/glados $install_location/gpt-glados
+		stty echo
+	fi
 	exit
 fi
 
