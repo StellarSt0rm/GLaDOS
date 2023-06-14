@@ -24,7 +24,7 @@ GLaDOS doesn't need API keys to work, as the AI that it contacts is [BAI Chat](h
   
   ​
   
-  Chat Mode, a way to ask a quick question (glados ""):
+  Classic Mode, a way to ask a quick question (glados ""):
   <p align="center"><img src="/resources/Classic Mode.png"></p>
   
   ​
