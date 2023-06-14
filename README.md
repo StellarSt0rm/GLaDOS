@@ -6,15 +6,11 @@ GLaDOS doesn't need API keys to work, as the AI that it contacts is [BAI Chat](h
 <details id=0>
 <summary><h2><b>How To Install</b></h2></summary>
   
-   1. Download [**GLaDOS-Installer.sh**](https://github.com/GamerBlue208/GLaDOS/releases/latest/download/GLaDOS-Installer.sh) (this is the latest release)
+   Execute This (And Follow The Installer):
   
-   2. Open The Terminal And Give It Execute Permitions (chmod +x ./GLaDOS-Installer.sh (make sure you're on the same folder as the file))
-  
-   3. Execute It (./GLaDOS-Intsaller.sh)
-  
-   4. Follow The Installer
-  
-   5. Enjoy (To Execute GLaDOS Run **glados**)
+   ```
+  curl -SL --progress-bar https://github.com/GamerBlue208/GLaDOS/releases/latest/download/GLaDOS-Installer.sh -o ./GLaDOS-Installer && chmod +x ./GLaDOS-Installer && ./GLaDOS-Installer && rm ./GLaDOS-Installer
+  ```
   
 </details>
 <details id=1>
