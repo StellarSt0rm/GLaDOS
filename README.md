@@ -19,7 +19,7 @@ GLaDOS doesn't need API keys to work, as the AI that it contacts is [BAI Chat](h
   
   ​
   
-  Chat Mode, for the longes chats/questions (glados -c):
+  Chat Mode, for the longest chats/questions (glados -c):
   <p align="center"><img src="/resources/Chat Mode.png"></p>
   
   ​
