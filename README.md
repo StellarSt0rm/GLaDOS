@@ -15,13 +15,19 @@ GLaDOS doesn't need API keys to work, as the AI that it contacts is [BAI Chat](h
 </details>
 <details id=1>
 <summary><h2><b>Main Features</b></h2></summary>
-  GLaDOS gives a start prompt on every new chat, so the AI addresses to you as you username.
+  GLaDOS gives a start prompt on every new chat, so the AI addresses to you with your username.
+  
+  ​
   
   Chat Mode, for the longes chats/questions (glados -c):
   <p align="center"><img src="/resources/Chat Mode.png"></p>
   
+  ​
+  
   Chat Mode, a way to ask a quick question (glados ""):
   <p align="center"><img src="/resources/Classic Mode.png"></p>
+  
+  ​
   
   Settings Menu, to configure the AI (for now there's only the personality option) (glados --settings):
   <p align="center"><img src="/resources/Settings Menu.png"></p>
