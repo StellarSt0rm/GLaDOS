@@ -33,6 +33,7 @@ GLaDOS doesn't need API keys to work, as the AI that it contacts is [BAI Chat](h
 <summary><h2><b>Plans For Future Of GLaDOS</b></h2></summary>
   
   I will start to make a fork of [tgpt](https://github.com/aandrew-me/tgpt), it will take long until its finished, when finished it will be released publicly and this repo will be privated. And also, i will remake the art.
+</details>
   
 <br>
 
