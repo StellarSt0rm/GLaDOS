@@ -9,7 +9,7 @@ GLaDOS doesn't need API keys to work, as the AI that it contacts is [BAI Chat](h
    Execute This (And Follow The Installer):
   
    ```
-  curl -SL --progress-bar https://github.com/GamerBlue208/GLaDOS/releases/latest/download/GLaDOS-Installer.sh -o ./GLaDOS-Installer && chmod +x ./GLaDOS-Installer && ./GLaDOS-Installer && rm ./GLaDOS-Installer
+  sudo curl -SL --progress-bar https://github.com/GamerBlue208/GLaDOS/releases/latest/download/GLaDOS-Installer.sh -o ./GLaDOS-Installer && sudo chmod +x ./GLaDOS-Installer && sudo ./GLaDOS-Installer && sudo rm ./GLaDOS-Installer
   ```
   
 </details>
