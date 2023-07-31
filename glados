@@ -43,7 +43,7 @@ green=$(tput setaf 2)
 normal=$(tput sgr0)
 magneta=$(tput setaf 5)
 
-h="\n${blue}Usage: glados \"Explain quantum computing in simple terms\"${yellow}\n\nCommand arguments:${normal}\n'-h'   -   To access this prompt\n'-c'   -   To access GLaDOS chat mode\n'-r'   -   To reset the chat\n'-n'   -   To prevent sending the name on first chat\n'-v'   -   To see the current verion\n'-u'   -   To update GLaDOS\n'-s'   -   To execute a shell command (EXPERIMENTAL!)\n\n${yellow}Chat mode arguments:  (Literally, just type them inside chat mode)${normal}\n'-q'   -   To quit GLaDOS chat mode\n'-h'   -   To access this prompt\n\n${green}More functions coming soon${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'GamerBlue208'   ${yellow}Email${blue}:${normal} 'gamerblue208+dev@gmail.com'"
+h="\n${blue}Usage: glados \"Explain quantum computing in simple terms\"${yellow}\n\nCommand arguments:${normal}\n'-h'   -   To access this prompt\n'-c'   -   To access GLaDOS chat mode\n'-r'   -   To reset the chat\n'-n'   -   To prevent sending the name on first chat\n'-v'   -   To see the current verion\n'-u'   -   To update GLaDOS\n'-s'   -   To execute a shell command (EXPERIMENTAL!)\n\n${yellow}Chat mode arguments:  (Literally, just type them inside chat mode)${normal}\n'-q'   -   To quit GLaDOS chat mode\n'-h'   -   To access this prompt\n\n${green}More functions coming soon${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'StellarSt0rm'   ${yellow}Email${blue}:${normal} 'StellarSt0rm+dev@gmail.com'"
 
 #-----------------------FUNCTIONS-----------------------
 function reset() {
@@ -116,7 +116,7 @@ while true; do
 			else
 				install_type="Local"
 			fi
-			printf "\n${blue}Current installation type${normal}: ${yellow}$install_type\n\n${blue}GLaDOS version${normal}:${yellow} $vers\n${blue}GLaDOS-GPT version${normal}:${yellow} $vers_2${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'GamerBlue208'   ${yellow}Email${blue}:${normal} 'gamerblue208+dev@gmail.com'\n$N"
+			printf "\n${blue}Current installation type${normal}: ${yellow}$install_type\n\n${blue}GLaDOS version${normal}:${yellow} $vers\n${blue}GLaDOS-GPT version${normal}:${yellow} $vers_2${normal}\n\n${blue}If You Have Any Questions Contact Me Trough:\n${yellow}GitHub${blue}:${normal} 'StellarSt0rm'   ${yellow}Email${blue}:${normal} 'gamerblue208+dev@gmail.com'\n$N"
 			stty echo
 			exit
 			shift;;
@@ -321,14 +321,14 @@ if [ "$OP_U" = true ]; then
 	#Prepare & Download
 	trap cleanup_sig SIGINT
 	printf "${yellow}Getting Latest Release Of GLaDOS-GPT...\n"
-	if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/gpt-glados" -o $install_location/gpt-glados && sleep 2; then
+	if tput setaf 4 && curl -SL --progress-bar "https://github.com/StellarSt0rm/GLaDOS/releases/latest/download/gpt-glados" -o $install_location/gpt-glados && sleep 2; then
 		printf "\033[1A\033[2K\033[1A\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS-GPT!\n"
 	else
 		printf "\033[1A\033[2K\033[1A\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS-GPT!\n"
 		cleanup_fail
 	fi
 	printf "${yellow}Getting Lastest Release Of GLaDOS...\n"
-	if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/glados" -o $install_location/glados && sleep 2; then
+	if tput setaf 4 && curl -SL --progress-bar "https://github.com/StellarSt0rm/GLaDOS/releases/latest/download/glados" -o $install_location/glados && sleep 2; then
 		printf "\033[1A\033[2K\033[1A\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS!\n"
 	else
 		printf "\033[1A\033[2K\033[1A\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS!\n"
