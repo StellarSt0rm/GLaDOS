@@ -87,7 +87,7 @@ printf "${magneta}----------------------------------\n\n"
 #Prepare & Download
 trap cleanup_sig SIGINT
 printf "${yellow}Getting Latest Release Of GLaDOS-GPT...\n"
-if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/gpt-glados" -o $install_location/gpt-glados && sleep 2; then
+if tput setaf 4 && curl -SL --progress-bar "https://github.com/StellarSt0rm/GLaDOS/releases/latest/download/gpt-glados" -o $install_location/gpt-glados && sleep 2; then
 	printf "\033[1A\033[2K\033[1A\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS-GPT!\n"
 else
 	printf "\033[1A\033[2K\033[1A\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS-GPT!\n"
@@ -95,7 +95,7 @@ else
 fi
 stty echo
 printf "${yellow}Getting Lastest Release Of GLaDOS...\n"
-if tput setaf 4 && curl -SL --progress-bar "https://github.com/GamerBlue208/GLaDOS/releases/latest/download/glados" -o $install_location/glados && sleep 2; then
+if tput setaf 4 && curl -SL --progress-bar "https://github.com/StellarSt0rm/GLaDOS/releases/latest/download/glados" -o $install_location/glados && sleep 2; then
 	printf "\033[1A\033[2K\033[1A\033[2K\r${green}Successfully Got Lastest Release Of GLaDOS!\n"
 else
 	printf "\033[1A\033[2K\033[1A\033[2K\r${red}Failed To Get Lastest Release Of GLaDOS!\n"
