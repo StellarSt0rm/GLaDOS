@@ -45,7 +45,7 @@ GLaDOS doesn't need API keys to work, as the AI that it contacts is [BAI Chat](h
 
 ---
 
-Made By GamerBlue208
+Made By StellarSt0rm
 
 & You Can Use The Code Freely
 
