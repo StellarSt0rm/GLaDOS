@@ -1,4 +1,6 @@
 # <p align="center"><img src="/resources/Logo.svg" height="190"></p>
+**I AM ABANDONING THIS PROJECT, I WILL NO LONGER UPDATE IT. IT WILL BE ARCHIVED THOUGH.**
+
 GLaDOS is a modified version of [tgpt](https://github.com/aandrew-me/tgpt), made to give the AI some instructions at the start of a new chat and extend the functionality of the original [tgpt](https://github.com/aandrew-me/tgpt) program, GLaDOS runs on the terminal, and needs bash to function and it only works on linux!
 
 GLaDOS doesn't need API keys to work, as the AI that it contacts is [BAI Chat](https://chatbot.theb.ai), a free AI tool
